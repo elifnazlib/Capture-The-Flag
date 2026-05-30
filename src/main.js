@@ -8,9 +8,18 @@ import { setupLights } from './scene/setupLights.js'
 import { createGround } from './world/ground.js'
 
 
-import { createPlayer } from './entities/player'
-import { InputController } from './controls/InputController'
-import { PlayerController } from './controls/PlayerController'
+import { createPlayer } from './entities/player.js'
+import { InputController } from './controls/InputController.js'
+import { PlayerController } from './controls/PlayerController.js'
+
+import { createArena } from './world/arena.js'
+
+import { createFlag } from './world/flag.js'
+import { FlagSystem } from './gameplay/FlagSystem.js'
+import { createScoreUI } from './ui/scoreUI.js'
+
+
+const scoreUI = createScoreUI()
 
 const scene = setupScene();
 
@@ -23,8 +32,22 @@ setupLights(scene);
 const ground = createGround();
 scene.add(ground);
 
+createArena(scene);
+
+const flag = createFlag()
+
+flag.position.set(0, 0, -35)
+
+scene.add(flag)
+
 const player = createPlayer()
 scene.add(player)
+
+const flagSystem = new FlagSystem(
+    player,
+    flag,
+    scoreUI
+)
 
 const input = new InputController()
 
@@ -39,6 +62,8 @@ function animate() {
     requestAnimationFrame(animate);
 
     playerController.update()
+
+    flagSystem.update()
 
     renderer.render(scene, camera);
 }

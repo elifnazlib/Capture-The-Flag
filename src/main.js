@@ -21,6 +21,8 @@ import { createScoreUI } from './ui/scoreUI.js'
 import { createEnemy } from './entities/enemy.js'
 import { EnemyFSM } from './ai/EnemyFSM.js'
 
+import { TagSystem } from './gameplay/TagSystem.js'
+
 
 const scoreUI = createScoreUI()
 
@@ -48,6 +50,13 @@ scene.add(player)
 
 const enemy = createEnemy()
 scene.add(enemy)
+
+const tagSystem = new TagSystem(
+    scene,
+    camera,
+    enemy,
+    player
+)
 
 const flagSystem = new FlagSystem(
     player,

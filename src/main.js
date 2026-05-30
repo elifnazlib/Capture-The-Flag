@@ -18,6 +18,9 @@ import { createFlag } from './world/flag.js'
 import { FlagSystem } from './gameplay/FlagSystem.js'
 import { createScoreUI } from './ui/scoreUI.js'
 
+import { createEnemy } from './entities/enemy.js'
+import { EnemyFSM } from './ai/EnemyFSM.js'
+
 
 const scoreUI = createScoreUI()
 
@@ -43,10 +46,19 @@ scene.add(flag)
 const player = createPlayer()
 scene.add(player)
 
+const enemy = createEnemy()
+scene.add(enemy)
+
 const flagSystem = new FlagSystem(
     player,
     flag,
     scoreUI
+)
+
+const enemyFSM = new EnemyFSM(
+    enemy,
+    player,
+    flag
 )
 
 const input = new InputController()
@@ -64,6 +76,8 @@ function animate() {
     playerController.update()
 
     flagSystem.update()
+
+    enemyFSM.update()
 
     renderer.render(scene, camera);
 }

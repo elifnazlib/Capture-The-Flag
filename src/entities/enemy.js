@@ -11,5 +11,8 @@ export function createEnemy() {
 
     enemy.position.set(10, 1, 30)
 
+    enemy.castShadow = true
+    enemy.receiveShadow = true
+
     return enemy
 }

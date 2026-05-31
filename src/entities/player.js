@@ -13,5 +13,8 @@ export function createPlayer() {
 
     player.position.y = 1
 
+    player.castShadow = true
+    player.receiveShadow = true
+
     return player
 }

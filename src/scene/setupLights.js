@@ -1,12 +1,43 @@
 import * as THREE from 'three'
 
 export function setupLights(scene) {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+
+    // Soft ambient light
+    const ambientLight =
+        new THREE.AmbientLight(
+            0xffffff,
+            0.45
+        )
+
     scene.add(ambientLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
+    // Sun light
+    const sun =
+        new THREE.DirectionalLight(
+            0xffffff,
+            1.5
+        )
 
-    directionalLight.position.set(10, 20, 10)
+    sun.position.set(
+        30,
+        40,
+        20
+    )
 
-    scene.add(directionalLight)
+    sun.castShadow = true
+
+    // Shadow quality
+    sun.shadow.mapSize.width = 1024
+    sun.shadow.mapSize.height = 1024
+
+    // Shadow camera area
+    sun.shadow.camera.left = -60
+    sun.shadow.camera.right = 60
+    sun.shadow.camera.top = 60
+    sun.shadow.camera.bottom = -60
+
+    sun.shadow.camera.near = 1
+    sun.shadow.camera.far = 120
+
+    scene.add(sun)
 }

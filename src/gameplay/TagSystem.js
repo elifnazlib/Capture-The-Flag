@@ -35,7 +35,7 @@ export class TagSystem {
 
         // const origin = this.camera.position.clone()
         const origin = this.player.position.clone()
-        
+
         const direction = new THREE.Vector3()
         // this.camera.getWorldDirection(direction)
         this.player.getWorldDirection(direction)

@@ -1,27 +1,27 @@
 import './style.css'
 
-import { setupScene } from './scene/setupScene.js'
-import { setupCamera } from './scene/setupCamera.js'
-import { setupRenderer } from './scene/setupRenderer.js'
-import { setupLights } from './scene/setupLights.js'
+import {setupScene} from './scene/setupScene.js'
+import {setupCamera} from './scene/setupCamera.js'
+import {setupRenderer} from './scene/setupRenderer.js'
+import {setupLights} from './scene/setupLights.js'
 
-import { createGround } from './world/ground.js'
+import {createGround} from './world/ground.js'
 
 
-import { createPlayer } from './entities/player.js'
-import { InputController } from './controls/InputController.js'
-import { PlayerController } from './controls/PlayerController.js'
+import {createPlayer} from './entities/player.js'
+import {InputController} from './controls/InputController.js'
+import {PlayerController} from './controls/PlayerController.js'
 
-import { createArena } from './world/arena.js'
+import {createArena} from './world/arena.js'
 
-import { createFlag } from './world/flag.js'
-import { FlagSystem } from './gameplay/FlagSystem.js'
-import { createScoreUI } from './ui/scoreUI.js'
+import {createFlag} from './world/flag.js'
+import {FlagSystem} from './gameplay/FlagSystem.js'
+import {createScoreUI} from './ui/scoreUI.js'
 
-import { createEnemy } from './entities/enemy.js'
-import { EnemyFSM } from './ai/EnemyFSM.js'
+import {createEnemy} from './entities/enemy.js'
+import {EnemyFSM} from './ai/EnemyFSM.js'
 
-import { TagSystem } from './gameplay/TagSystem.js'
+import {TagSystem} from './gameplay/TagSystem.js'
 
 
 const scoreUI = createScoreUI()
@@ -87,6 +87,9 @@ function animate() {
     flagSystem.update()
 
     enemyFSM.update()
+
+    flag.userData.flagMaterial.uniforms.time.value =
+        performance.now() * 0.001;
 
     renderer.render(scene, camera);
 }

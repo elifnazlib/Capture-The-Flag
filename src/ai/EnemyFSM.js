@@ -7,10 +7,11 @@ export const EnemyState = {
 }
 
 export class EnemyFSM {
-    constructor(enemy, player, flag) {
+    constructor(enemy, player, flag, collisionSystem) {
         this.enemy = enemy
         this.player = player
         this.flag = flag
+        this.collisionSystem = collisionSystem
 
         this.state = EnemyState.SEEK_FLAG
 
@@ -45,9 +46,13 @@ export class EnemyFSM {
         if (direction.length() > 0.01) {
             direction.normalize()
 
-            this.enemy.position.add(
-                direction.multiplyScalar(this.speed)
-            )
+            const movement = direction.clone().multiplyScalar(this.speed)
+            const nextPosition = this.enemy.position.clone().add(movement)
+
+            if (this.collisionSystem.canMove(nextPosition))
+            {
+                this.enemy.position.copy(nextPosition)
+            }
 
             this.enemy.lookAt(
                 targetPosition.x,

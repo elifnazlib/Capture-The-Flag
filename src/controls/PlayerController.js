@@ -3,10 +3,11 @@ import * as THREE from 'three'
 // This handles: movement, sprint, mouse rotation, camera follow
 
 export class PlayerController {
-    constructor(player, camera, input) {
+    constructor(player, camera, input, collisionSystem) {
         this.player = player
         this.camera = camera
         this.input = input
+        this.collisionSystem = collisionSystem
 
         this.moveSpeed = 0.1
         this.sprintSpeed = 0.18
@@ -70,9 +71,13 @@ export class PlayerController {
         if (moveDirection.length() > 0) {
             moveDirection.normalize()
 
-            this.player.position.add(
-                moveDirection.multiplyScalar(speed)
-            )
+            const movement = moveDirection.clone().multiplyScalar(speed)
+            const nextPosition = this.player.position.clone().add(movement)
+
+            if (this.collisionSystem.canMove(nextPosition))
+            {
+                this.player.position.copy(nextPosition)
+            }
 
             this.player.rotation.y = this.cameraRotationY
         }

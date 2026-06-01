@@ -5,6 +5,9 @@ import { createBase } from './base'
 
 // This builds the full arena
 export function createArena(scene) {
+
+    const colliders = []
+
     // Arena walls
     const wallMaterial =
         new THREE.MeshStandardMaterial({
@@ -33,6 +36,11 @@ export function createArena(scene) {
         mesh.position.set(wall.x, 3, wall.z)
 
         scene.add(mesh)
+
+        mesh.userData.boundingBox =
+            new THREE.Box3().setFromObject(mesh)
+
+        colliders.push(mesh)
     })
 
     // Red base
@@ -53,7 +61,7 @@ export function createArena(scene) {
         { x: -20, z: 0, width: 3, height: 5 },
         { x: 20, z: 0, width: 3, height: 5 },
 
-        { x: 0, z: 0, width: 8, height: 3, depth: 8 }
+        // { x: 0, z: 0, width: 8, height: 3, depth: 8 }
     ]
 
     obstacles.forEach((data) => {
@@ -67,5 +75,12 @@ export function createArena(scene) {
         })
 
         scene.add(obstacle)
+
+        obstacle.userData.boundingBox =
+            new THREE.Box3().setFromObject(obstacle)
+
+        colliders.push(obstacle)
     })
+
+    return colliders
 }

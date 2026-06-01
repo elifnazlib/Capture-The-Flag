@@ -23,6 +23,8 @@ import {EnemyFSM} from './ai/EnemyFSM.js'
 
 import {TagSystem} from './gameplay/TagSystem.js'
 
+import { CollisionSystem } from './world/CollisionSystem.js'
+
 
 const scoreUI = createScoreUI()
 
@@ -37,7 +39,9 @@ setupLights(scene);
 const ground = createGround();
 scene.add(ground);
 
-createArena(scene);
+const colliders = createArena(scene)
+
+const collisionSystem = new CollisionSystem(colliders)
 
 const flag = createFlag()
 
@@ -67,7 +71,8 @@ const flagSystem = new FlagSystem(
 const enemyFSM = new EnemyFSM(
     enemy,
     player,
-    flag
+    flag,
+    collisionSystem
 )
 
 const input = new InputController()
@@ -75,7 +80,8 @@ const input = new InputController()
 const playerController = new PlayerController(
     player,
     camera,
-    input
+    input,
+    collisionSystem
 )
 
 // Game Loop

@@ -37,29 +37,74 @@ export class EnemyFSM {
     }
 
     moveTowards(targetPosition) {
-        const direction = targetPosition
-            .clone()
-            .sub(this.enemy.position)
+        const forward =
+            targetPosition.clone()
+                .sub(this.enemy.position)
 
-        direction.y = 0
+        forward.y = 0
 
-        if (direction.length() > 0.01) {
-            direction.normalize()
+        if (forward.length() < 0.01) {
+            return
+        }
 
-            const movement = direction.clone().multiplyScalar(this.speed)
-            const nextPosition = this.enemy.position.clone().add(movement)
+        forward.normalize()
 
-            if (this.collisionSystem.canMove(nextPosition))
-            {
-                this.enemy.position.copy(nextPosition)
-            }
-
+        // Try normal movement first
+        if (this.tryMove(forward)) {
             this.enemy.lookAt(
                 targetPosition.x,
                 this.enemy.position.y,
                 targetPosition.z
             )
+            console.log('Avoiding obstacle')
+            return
         }
+
+        // 45 degree left
+        const left = forward.clone()
+
+        left.applyAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            Math.PI / 4
+        )
+
+        if (this.tryMove(left)) {
+            return
+        }
+
+        // 45 degree right
+        const right = forward.clone()
+
+        right.applyAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            -Math.PI / 4
+        )
+
+        if (this.tryMove(right)) {
+            return
+        }
+
+        // 90 degree left
+        const hardLeft = forward.clone()
+
+        hardLeft.applyAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            Math.PI / 2
+        )
+
+        if (this.tryMove(hardLeft)) {
+            return
+        }
+
+        // 90 degree right
+        const hardRight = forward.clone()
+
+        hardRight.applyAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            -Math.PI / 2
+        )
+
+        this.tryMove(hardRight)
     }
 
     update() {
@@ -148,5 +193,29 @@ export class EnemyFSM {
                 EnemyState.SEEK_FLAG
             )
         }
+    }
+
+    tryMove(direction) {
+        const movement =
+            direction.clone()
+                .multiplyScalar(this.speed)
+
+        const nextPosition =
+            this.enemy.position.clone()
+                .add(movement)
+
+        if (
+            this.collisionSystem.canMove(
+                nextPosition
+            )
+        ) {
+            this.enemy.position.copy(
+                nextPosition
+            )
+
+            return true
+        }
+
+        return false
     }
 }

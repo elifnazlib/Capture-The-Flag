@@ -56,7 +56,7 @@ export class EnemyFSM {
                 this.enemy.position.y,
                 targetPosition.z
             )
-            console.log('Avoiding obstacle')
+
             return
         }
 

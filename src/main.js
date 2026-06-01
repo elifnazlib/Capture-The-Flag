@@ -25,6 +25,8 @@ import {TagSystem} from './gameplay/TagSystem.js'
 
 import { CollisionSystem } from './world/CollisionSystem.js'
 
+import { createOcean } from './world/ocean.js'
+
 
 const scoreUI = createScoreUI()
 
@@ -40,6 +42,10 @@ const ground = createGround();
 scene.add(ground);
 
 const colliders = createArena(scene)
+
+const ocean = createOcean()
+
+scene.add(ocean.mesh)
 
 const collisionSystem = new CollisionSystem(colliders)
 
@@ -96,6 +102,10 @@ function animate() {
 
     flag.userData.flagMaterial.uniforms.time.value =
         performance.now() * 0.001;
+
+    // ocean animation ONLY
+    ocean.material.uniforms.time.value =
+        performance.now() * 0.001
 
     renderer.render(scene, camera);
 }

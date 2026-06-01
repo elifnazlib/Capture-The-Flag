@@ -8,10 +8,12 @@ export function createArena(scene) {
 
     const colliders = []
 
-    // Arena walls
     const wallMaterial =
         new THREE.MeshStandardMaterial({
-            color: 0x444444
+            color: 0x444444,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false
         })
 
     const wallData = [

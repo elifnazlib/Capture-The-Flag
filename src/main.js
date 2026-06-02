@@ -55,7 +55,7 @@ const collisionSystem = new CollisionSystem(colliders)
 
 const flag = createFlag()
 
-flag.position.set(0, 0, -35)
+flag.position.set(0, 0, 0)
 
 scene.add(flag)
 

@@ -8,11 +8,11 @@ export function createFlagMaterial() {
             time: { value: 0 },
 
             topColor: {
-                value: new THREE.Color(0xff4444)
+                value: new THREE.Color(0xf7d914)
             },
 
             bottomColor: {
-                value: new THREE.Color(0xaa0000)
+                value: new THREE.Color(0xf0e47a)
             }
         },
 

@@ -20,12 +20,13 @@ export class FlagSystem {
 
         this.stealProtectionUntil = 0
 
-        // Blue base position from arena.js
-        this.captureBase = new THREE.Vector3(
-            0,
-            0,
-            35
-        )
+        this.centerPosition = new THREE.Vector3(0, 0, 0)
+
+        // Blue base (enemy's)
+        this.enemyBase = new THREE.Vector3(0, 0, 35)
+
+        // Red base (player's)
+        this.playerBase = new THREE.Vector3(0, 0, -35)
 
         this.winText = document.createElement('div')
 
@@ -125,7 +126,7 @@ export class FlagSystem {
 
             const distanceToBase =
                 playerPos.distanceTo(
-                    this.captureBase
+                    this.playerBase
                 )
 
             if (distanceToBase < 5) {
@@ -149,7 +150,7 @@ export class FlagSystem {
 
             const distanceToBase =
                 enemyPos.distanceTo(
-                    this.captureBase
+                    this.enemyBase
                 )
 
             if (distanceToBase < 5) {
@@ -171,12 +172,12 @@ export class FlagSystem {
 
     resetFlag() {
 
-        console.log('Flag reset to neutral state')
+        console.log('Flag reset to center')
         this.carrier = null
         this.flag.position.set(
+            this.centerPosition.x,
             0,
-            0,
-            -35
+            this.centerPosition.z
         )
 
         this.flag.position.y = 0

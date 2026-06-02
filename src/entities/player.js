@@ -11,7 +11,7 @@ export function createPlayer() {
 
     const player = new THREE.Mesh(geometry, material)
 
-    player.position.y = 1
+    player.position.set(-10, 1, -30)
 
     player.castShadow = true
     player.receiveShadow = true

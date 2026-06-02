@@ -32,5 +32,11 @@ export function createFlag() {
     // expose material for animation
     group.userData.flagMaterial = flagMaterial
 
+    pole.castShadow = true
+    pole.receiveShadow = true
+
+    cloth.castShadow = true
+    cloth.receiveShadow = true
+
     return group
 }

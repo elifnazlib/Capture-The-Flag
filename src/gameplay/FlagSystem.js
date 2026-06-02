@@ -8,6 +8,13 @@ export class FlagSystem {
         this.scoreUI = scoreUI
 
         this.score = 0
+        this.enemyScore = 0
+
+        this.scoreUI.textContent =
+            `Player: 0 | Enemy: 0`
+
+        this.winScore = 5
+        this.gameOver = false
 
         this.carrier = null
 
@@ -19,9 +26,42 @@ export class FlagSystem {
             0,
             35
         )
+
+        this.winText = document.createElement('div')
+
+        this.winText.style.position = 'absolute'
+        this.winText.style.top = '50%'
+        this.winText.style.left = '50%'
+        this.winText.style.transform = 'translate(-50%, -50%)'
+        this.winText.style.fontSize = '48px'
+        this.winText.style.color = 'white'
+        this.winText.style.fontWeight = 'bold'
+        this.winText.style.display = 'none'
+        this.winText.style.textShadow = '0 0 10px black'
+
+        document.body.appendChild(this.winText)
+
+        this.restartButton = document.createElement('button')
+
+        this.restartButton.textContent = 'Restart'
+        this.restartButton.style.position = 'absolute'
+        this.restartButton.style.top = '60%'
+        this.restartButton.style.left = '50%'
+        this.restartButton.style.transform = 'translate(-50%, -50%)'
+        this.restartButton.style.fontSize = '24px'
+        this.restartButton.style.padding = '10px 20px'
+        this.restartButton.style.cursor = 'pointer'
+        this.restartButton.style.display = 'none'
+
+        document.body.appendChild(this.restartButton)
+
+        this.restartButton.addEventListener('click', () => {
+            window.location.reload()
+        })
     }
 
     update() {
+        if (this.gameOver) return
 
         const playerPos = this.player.position
         const enemyPos = this.enemy.position
@@ -95,9 +135,10 @@ export class FlagSystem {
                 )
 
                 this.score++
+                this.checkWin()
 
                 this.scoreUI.textContent =
-                    `Score: ${this.score}`
+                    `Player: ${this.score} | Enemy: ${this.enemyScore}`
 
                 this.resetFlag()
             }
@@ -116,6 +157,12 @@ export class FlagSystem {
                 console.log(
                     'Enemy scored'
                 )
+
+                this.enemyScore++
+                this.checkWin()
+
+                this.scoreUI.textContent =
+                    `Player: ${this.score} | Enemy: ${this.enemyScore}`
 
                 this.resetFlag()
             }
@@ -172,5 +219,33 @@ export class FlagSystem {
         this.flag.position.copy(position)
 
         this.flag.position.y = 0
+    }
+
+    checkWin() {
+
+        if (this.score >= this.winScore) {
+            this.endGame('PLAYER WINS!')
+        }
+
+        if (this.enemyScore >= this.winScore) {
+            this.endGame('ENEMY WINS!')
+        }
+    }
+
+    endGame(text) {
+        document.exitPointerLock?.()
+
+        if (this.gameOver) return
+
+        this.gameOver = true
+
+        console.log(text)
+
+        this.winText.textContent = text
+        this.winText.style.display = 'block'
+
+        this.restartButton.style.display = 'block'
+
+        document.body.style.cursor = 'auto'
     }
 }

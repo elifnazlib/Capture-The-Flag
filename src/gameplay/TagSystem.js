@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 
 export class TagSystem {
-    constructor(scene, camera, enemy, player) {
+    constructor(scene, camera, enemy, player, flagSystem) {
         this.scene = scene
         this.camera = camera
         this.enemy = enemy
         this.player = player
+        this.flagSystem = flagSystem
 
         this.raycaster = new THREE.Raycaster()
 
@@ -54,6 +55,12 @@ export class TagSystem {
 
         if (hits.length > 0) {
             console.log('Enemy tagged!')
+
+            if (this.flagSystem.enemyHasFlag())
+            {
+                this.flagSystem.dropFlag(this.enemy.position.clone())
+                console.log('Enemy tagged - flag dropped')
+            }
 
             this.respawnEnemy()
         }

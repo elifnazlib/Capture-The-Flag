@@ -7,11 +7,12 @@ export const EnemyState = {
 }
 
 export class EnemyFSM {
-    constructor(enemy, player, flag, collisionSystem) {
+    constructor(enemy, player, flag, collisionSystem, flagSystem) {
         this.enemy = enemy
         this.player = player
         this.flag = flag
         this.collisionSystem = collisionSystem
+        this.flagSystem = flagSystem
 
         this.state = EnemyState.SEEK_FLAG
 
@@ -22,8 +23,6 @@ export class EnemyFSM {
             1,
             35
         )
-
-        this.isCarryingFlag = false
     }
 
     changeState(newState) {
@@ -108,6 +107,14 @@ export class EnemyFSM {
     }
 
     update() {
+        if (this.flagSystem.enemyHasFlag())
+        {
+            if (this.state !== EnemyState.RETURN_HOME)
+            {
+                this.changeState(EnemyState.RETURN_HOME)
+            }
+        }
+
         const playerDistance =
             this.enemy.position.distanceTo(
                 this.player.position
@@ -143,12 +150,9 @@ export class EnemyFSM {
                 this.flag.position
             )
 
-        if (flagDistance < 2) {
-            this.isCarryingFlag = true
-
-            this.changeState(
-                EnemyState.RETURN_HOME
-            )
+        if (this.flagSystem.enemyHasFlag())
+        {
+            this.changeState(EnemyState.RETURN_HOME)
         }
     }
 
@@ -163,13 +167,21 @@ export class EnemyFSM {
     }
 
     updateReturnHome() {
-        this.flag.position.copy(
-            this.enemy.position
+
+        if (
+            !this.flagSystem.enemyHasFlag()
+        ) {
+
+            this.changeState(
+                EnemyState.SEEK_FLAG
+            )
+
+            return
+        }
+
+        this.moveTowards(
+            this.homePosition
         )
-
-        this.flag.position.y = 3
-
-        this.moveTowards(this.homePosition)
 
         const homeDistance =
             this.enemy.position.distanceTo(
@@ -177,17 +189,12 @@ export class EnemyFSM {
             )
 
         if (homeDistance < 2) {
+
             console.log(
                 'Enemy captured the flag!'
             )
 
-            this.isCarryingFlag = false
-
-            this.flag.position.set(
-                0,
-                0,
-                -35
-            )
+            this.flagSystem.resetFlag()
 
             this.changeState(
                 EnemyState.SEEK_FLAG

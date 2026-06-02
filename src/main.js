@@ -27,6 +27,8 @@ import { CollisionSystem } from './world/CollisionSystem.js'
 
 import { createOcean } from './world/ocean.js'
 
+import assetLoader from "./world/AssetManager.js";
+
 
 const scoreUI = createScoreUI()
 
@@ -40,6 +42,8 @@ setupLights(scene);
 
 const ground = createGround();
 scene.add(ground);
+
+assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1);
 
 const colliders = createArena(scene)
 

@@ -18,6 +18,8 @@ import {createFlag} from './world/flag.js'
 import {FlagSystem} from './gameplay/FlagSystem.js'
 import {createScoreUI} from './ui/scoreUI.js'
 
+import {createSettingsUI} from './ui/settingsUI.js'
+
 import {createEnemy} from './entities/enemy.js'
 import {EnemyFSM, EnemyState} from './ai/EnemyFSM'
 
@@ -36,9 +38,17 @@ const scene = setupScene();
 
 const camera = setupCamera();
 
+const freeCamera = setupCamera();
+const cameraState = {
+    active: camera,
+    original: camera,
+    free: freeCamera
+};
+
 const renderer = setupRenderer();
 
-setupLights(scene);
+const lights = setupLights(scene);
+createSettingsUI(lights, cameraState);
 
 const ground = createGround();
 scene.add(ground);
@@ -114,7 +124,11 @@ function animate() {
     ocean.material.uniforms.time.value =
         performance.now() * 0.001
 
-    renderer.render(scene, camera);
+    if (lights && lights.spotlightHelper && lights.spotlightHelper.visible) {
+        lights.spotlightHelper.update()
+    }
+
+    renderer.render(scene, cameraState.active);
 }
 
 animate()
@@ -123,6 +137,9 @@ animate()
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+
+    freeCamera.aspect = window.innerWidth / window.innerHeight;
+    freeCamera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 })

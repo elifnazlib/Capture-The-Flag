@@ -40,4 +40,38 @@ export function setupLights(scene) {
     sun.shadow.camera.far = 120
 
     scene.add(sun)
+    scene.add(sun.target)
+
+    // Spotlight pointing at the center
+    const spotlight = new THREE.SpotLight(0xfffaed, 20.0, 100, Math.PI / 6, 0.5, 1)
+    spotlight.position.set(0, 20, 0)
+
+    const target = new THREE.Object3D()
+    target.position.set(0, 0, 0)
+    scene.add(target)
+    spotlight.target = target
+
+    spotlight.castShadow = true
+    spotlight.shadow.mapSize.width = 2048
+    spotlight.shadow.mapSize.height = 2048
+    spotlight.shadow.camera.near = 10
+    spotlight.shadow.camera.far = 100
+    spotlight.shadow.focus = 1
+
+    scene.add(spotlight)
+
+    // Add helper
+    const spotlightHelper = new THREE.SpotLightHelper(spotlight)
+    scene.add(spotlightHelper)
+
+    // Keep helper and spotlight on initially
+    spotlight.visible = true
+    spotlightHelper.visible = true
+
+    return {
+        ambientLight,
+        sun,
+        spotlight,
+        spotlightHelper
+    }
 }

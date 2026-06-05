@@ -12,6 +12,7 @@ export function createOcean() {
 
     const material =
         new THREE.ShaderMaterial({
+            glslVersion: THREE.GLSL3,
 
             uniforms: {
                 time: { value: 0 },
@@ -28,8 +29,8 @@ export function createOcean() {
             vertexShader: `
                 uniform float time;
 
-                varying float vElevation;
-                varying vec2 vUv;
+                out float vElevation;
+                out vec2 vUv;
 
                 void main() {
 
@@ -60,8 +61,9 @@ export function createOcean() {
                 uniform vec3 deepColor;
                 uniform vec3 shallowColor;
 
-                varying float vElevation;
-                varying vec2 vUv;
+                in float vElevation;
+                in vec2 vUv;
+                out vec4 fragColor;
 
                 void main() {
 
@@ -90,7 +92,7 @@ export function createOcean() {
                             vUv.y
                         );
 
-                    gl_FragColor =
+                    fragColor =
                         vec4(color, alpha);
                 }
             `,
@@ -104,6 +106,8 @@ export function createOcean() {
             geometry,
             material
         )
+
+    ocean.name = 'Ocean'
 
     ocean.rotation.x = -Math.PI / 2
 

@@ -1,7 +1,11 @@
 import * as THREE from 'three'
 
 export function setupRenderer() {
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('webgl2')
     const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        context: context,
         antialias: true
     })
 

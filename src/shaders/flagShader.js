@@ -3,6 +3,7 @@ import * as THREE from 'three'
 export function createFlagMaterial() {
     return new THREE.ShaderMaterial({
         side: THREE.DoubleSide,
+        glslVersion: THREE.GLSL3,
 
         uniforms: {
             time: { value: 0 },
@@ -19,7 +20,7 @@ export function createFlagMaterial() {
         vertexShader: `
       uniform float time;
 
-      varying vec2 vUv;
+      out vec2 vUv;
 
       void main() {
 
@@ -32,12 +33,6 @@ export function createFlagMaterial() {
         // the top part swings more
         float waveStrength = pow(uv.x, 1.5);
 
-        // // Simple sine wave animation
-        // pos.z += sin(
-        //   pos.x * 4.0 +
-        //   time * 3.0
-        // ) * 0.2 * waveStrength;
-        
         // Main wave
                 pos.z +=
                     sin(
@@ -76,7 +71,8 @@ export function createFlagMaterial() {
       uniform vec3 topColor;
       uniform vec3 bottomColor;
 
-      varying vec2 vUv;
+      in vec2 vUv;
+      out vec4 fragColor;
 
       void main() {
 
@@ -91,7 +87,7 @@ export function createFlagMaterial() {
         // Subtle lighting effect
         color += vUv.x * 0.08;
         
-        gl_FragColor = vec4(
+        fragColor = vec4(
           color,
           1.0
         );

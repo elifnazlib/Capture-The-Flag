@@ -107,15 +107,6 @@ window.addEventListener('keydown', (event) => {
 
 let lastTime = performance.now();
 
-// Post Processing Shader Setup
-let postScene = null;
-let postCamera = null;
-let renderTarget = null;
-let postQuad = null;
-
-let phongMaterial = null;
-let toonMaterial = null;
-
 let currentShaderMode = 0; // 0: Normal, 1: Blinn-Phong, 2: Toon
 const shaderModes = ['Normal', 'Blinn-Phong', 'Toon'];
 
@@ -123,6 +114,14 @@ const phongVertexUrl = '/shaders/phongVertex.glsl';
 const phongFragmentUrl = '/shaders/phongFragment.glsl';
 const toonVertexUrl = '/shaders/toonVertex.glsl';
 const toonFragmentUrl = '/shaders/toonFragment.glsl';
+
+let postScene = null;
+let postCamera = null;
+let renderTarget = null;
+let postQuad = null;
+
+let phongMaterial = null;
+let toonMaterial = null;
 
 let shadersLoaded = false;
 let phongVertexSource = '';
@@ -148,6 +147,7 @@ Promise.all([
     postCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
 
     phongMaterial = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
         vertexShader: phongVertexSource,
         fragmentShader: phongFragmentSource,
         uniforms: {
@@ -160,6 +160,7 @@ Promise.all([
     });
 
     toonMaterial = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
         vertexShader: toonVertexSource,
         fragmentShader: toonFragmentSource,
         uniforms: {

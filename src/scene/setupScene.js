@@ -12,7 +12,7 @@ export function setupScene() {
         new THREE.Fog(
             skyColor,
             40,   // start distance
-            120   // end distance
+            75   // end distance
         )
 
     return scene

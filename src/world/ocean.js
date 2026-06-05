@@ -4,8 +4,8 @@ export function createOcean() {
 
     const geometry =
         new THREE.PlaneGeometry(
-            300,
-            200,
+            1000,
+            750,
             64,
             64
         )
@@ -109,8 +109,8 @@ export function createOcean() {
 
     ocean.position.set(
         0,
-        0,
-        -140
+        -5,
+        0
     )
 
     return {

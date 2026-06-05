@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 export function createSettingsUI(lights, cameraState) {
     const { spotlight, spotlightHelper, sun } = lights
     const { original, free } = cameraState
@@ -251,6 +253,175 @@ export function createSettingsUI(lights, cameraState) {
     createControlRow(panel, '  X:', () => sun.target.position.x, (val) => sun.target.position.x = val, 1.0)
     createControlRow(panel, '  Y:', () => sun.target.position.y, (val) => sun.target.position.y = val, 1.0)
     createControlRow(panel, '  Z:', () => sun.target.position.z, (val) => sun.target.position.z = val, 1.0)
+
+    // --- OBJECT TRANSFORM SECTION ---
+    const transformHeader = document.createElement('div')
+    transformHeader.textContent = '[Object Transform]'
+    transformHeader.style.borderBottom = '1px solid #555'
+    transformHeader.style.marginTop = '10px'
+    transformHeader.style.fontWeight = 'bold'
+    panel.appendChild(transformHeader)
+
+    // Dropdown to select object
+    const rowSelectObj = document.createElement('div')
+    rowSelectObj.style.display = 'flex'
+    rowSelectObj.style.justifyContent = 'space-between'
+    rowSelectObj.style.alignItems = 'center'
+
+    const labelSelect = document.createElement('span')
+    labelSelect.textContent = 'Object:'
+
+    const selectObj = document.createElement('select')
+    selectObj.style.backgroundColor = '#333'
+    selectObj.style.color = '#fff'
+    selectObj.style.border = '1px solid #555'
+    selectObj.style.padding = '2px'
+    selectObj.style.fontFamily = 'monospace'
+
+    const optNone = document.createElement('option')
+    optNone.value = ''
+    optNone.textContent = '-- None --'
+    selectObj.appendChild(optNone)
+
+    const optCustom = document.createElement('option');
+    optCustom.value = 'Bee';     // Must exactly match the object.name from Step 1
+    optCustom.textContent = 'Bee'; // Text visible to the user in the dropdown
+    selectObj.appendChild(optCustom);
+
+    const optCube1 = document.createElement('option')
+    optCube1.value = 'Cube 1'
+    optCube1.textContent = 'Cube 1'
+    selectObj.appendChild(optCube1)
+
+    const optCube2 = document.createElement('option')
+    optCube2.value = 'Cube 2'
+    optCube2.textContent = 'Cube 2'
+    selectObj.appendChild(optCube2)
+
+    const optCube3 = document.createElement('option')
+    optCube3.value = 'Cube 3'
+    optCube3.textContent = 'Cube 3'
+    selectObj.appendChild(optCube3)
+
+    rowSelectObj.appendChild(labelSelect)
+    rowSelectObj.appendChild(selectObj)
+    panel.appendChild(rowSelectObj)
+
+    // Transform fields container
+    const transformFieldsContainer = document.createElement('div')
+    transformFieldsContainer.style.display = 'none'
+    transformFieldsContainer.style.flexDirection = 'column'
+    transformFieldsContainer.style.gap = '5px'
+    panel.appendChild(transformFieldsContainer)
+
+    let selectedObject = null;
+    let selectionHelper = null;
+
+    selectObj.onchange = () => {
+        const val = selectObj.value;
+        transformFieldsContainer.innerHTML = '';
+
+        const scene = spotlight.parent;
+        if (selectionHelper && scene) {
+            scene.remove(selectionHelper);
+            selectionHelper = null;
+        }
+
+        if (!val) {
+            transformFieldsContainer.style.display = 'none';
+            selectedObject = null;
+            return;
+        }
+
+        if (!scene) {
+            transformFieldsContainer.style.display = 'none';
+            selectedObject = null;
+            return;
+        }
+
+        selectedObject = scene.getObjectByName(val);
+        if (!selectedObject) {
+            transformFieldsContainer.style.display = 'none';
+            return;
+        }
+
+        selectionHelper = new THREE.BoxHelper(selectedObject, 0x00ffcc);
+        scene.add(selectionHelper);
+
+        transformFieldsContainer.style.display = 'flex';
+
+        // Add translation title
+        const posTitle = document.createElement('div')
+        posTitle.textContent = '  Translation (Pos):'
+        posTitle.style.color = '#888'
+        posTitle.style.marginTop = '5px'
+        transformFieldsContainer.appendChild(posTitle)
+
+        // Translation control rows
+        createControlRow(transformFieldsContainer, '    X:',
+            () => selectedObject.position.x,
+            (newVal) => {
+                selectedObject.position.x = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 1.0)
+        createControlRow(transformFieldsContainer, '    Y:',
+            () => selectedObject.position.y,
+            (newVal) => {
+                selectedObject.position.y = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 1.0)
+        createControlRow(transformFieldsContainer, '    Z:',
+            () => selectedObject.position.z,
+            (newVal) => {
+                selectedObject.position.z = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 1.0)
+
+        // Add rotation title
+        const rotTitle = document.createElement('div')
+        rotTitle.textContent = '  Rotation (Angle):'
+        rotTitle.style.color = '#888'
+        rotTitle.style.marginTop = '5px'
+        transformFieldsContainer.appendChild(rotTitle)
+
+        // Rotation control rows (using 0.1 radian steps)
+        createControlRow(transformFieldsContainer, '    X:',
+            () => selectedObject.rotation.x,
+            (newVal) => {
+                selectedObject.rotation.x = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 0.1)
+        createControlRow(transformFieldsContainer, '    Y:',
+            () => selectedObject.rotation.y,
+            (newVal) => {
+                selectedObject.rotation.y = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 0.1)
+        createControlRow(transformFieldsContainer, '    Z:',
+            () => selectedObject.rotation.z,
+            (newVal) => {
+                selectedObject.rotation.z = newVal;
+                if (selectedObject.userData && selectedObject.userData.boundingBox) {
+                    selectedObject.userData.boundingBox.setFromObject(selectedObject);
+                }
+                if (selectionHelper) selectionHelper.update();
+            }, 0.1)
+    };
 
     document.body.appendChild(panel)
 

@@ -12,7 +12,7 @@ export class AssetLoader {
     }
 
     // Loads a 3D model (.glb, .gltf, or .obj), caches it, sets up shadows, and places it in the scene.
-    load(url, scene, position = {x: 0, y: 0, z: 0}, scale = 1) {
+    load(url, scene, position = {x: 0, y: 0, z: 0}, scale = 1, name = '') {
         // 1. If already cached, clone and place instantly
         if (this.cache[url]) {
             const clone = this.cache[url].clone()
@@ -47,6 +47,11 @@ export class AssetLoader {
             const clone = SkeletonUtils.clone(modelScene)
             clone.position.set(position.x, position.y, position.z)
             clone.scale.set(scale, scale, scale)
+
+            if (name) {
+                clone.name = name;
+            }
+
             scene.add(clone)
 
             console.log(`[AssetLoader] Successfully loaded & cached: ${url}`)

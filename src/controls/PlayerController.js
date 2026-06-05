@@ -14,6 +14,7 @@ export class PlayerController {
         this.mouseSensitivity = 0.002
 
         this.cameraRotationY = 0
+        this.cameraMode = 'FOLLOW'
 
         this.setupPointerLock()
         this.setupMouseLook()
@@ -83,17 +84,19 @@ export class PlayerController {
         }
 
         // Third-person camera follow
-        const cameraOffset = new THREE.Vector3(0, 6, -8)
+        if (this.cameraMode !== 'NAME_VIEW') {
+            const cameraOffset = new THREE.Vector3(0, 6, -8)
 
-        cameraOffset.applyAxisAngle(
-            new THREE.Vector3(0, 1, 0),
-            this.cameraRotationY
-        )
+            cameraOffset.applyAxisAngle(
+                new THREE.Vector3(0, 1, 0),
+                this.cameraRotationY
+            )
 
-        this.camera.position.copy(
-            this.player.position.clone().add(cameraOffset)
-        )
+            this.camera.position.copy(
+                this.player.position.clone().add(cameraOffset)
+            )
 
-        this.camera.lookAt(this.player.position)
+            this.camera.lookAt(this.player.position)
+        }
     }
 }

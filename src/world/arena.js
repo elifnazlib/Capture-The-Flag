@@ -66,7 +66,7 @@ export function createArena(scene) {
         // { x: 0, z: 0, width: 8, height: 3, depth: 8 }
     ]
 
-    obstacles.forEach((data) => {
+    obstacles.forEach((data, index) => {
         const obstacle = createObstacle({
             width: data.width || 4,
             height: data.height || 4,
@@ -75,6 +75,10 @@ export function createArena(scene) {
             y: (data.height || 4) / 2,
             z: data.z
         })
+
+        if (index < 3) {
+            obstacle.name = `Cube ${index + 1}`
+        }
 
         scene.add(obstacle)
 

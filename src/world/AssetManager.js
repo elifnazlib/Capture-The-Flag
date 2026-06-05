@@ -11,6 +11,35 @@ export class AssetLoader {
         this.cache = {} // Caches loaded models
     }
 
+    loadModel(url) {
+        return new Promise((resolve, reject) => {
+            if (this.cache[url]) {
+                resolve(SkeletonUtils.clone(this.cache[url]))
+                return
+            }
+
+            const isObj = url.toLowerCase().endsWith('.obj')
+            const loader = isObj ? this.objLoader : this.gltfLoader
+
+            loader.load(url, (loadedData) => {
+                const modelScene = isObj ? loadedData : loadedData.scene
+
+                modelScene.traverse((child) => {
+                    if (child.isMesh) {
+                        child.castShadow = true
+                        child.receiveShadow = true
+                    }
+                })
+
+                this.cache[url] = modelScene
+                resolve(SkeletonUtils.clone(modelScene))
+            }, undefined, (err) => {
+                console.error(`Error loading model ${url}:`, err)
+                reject(err)
+            })
+        })
+    }
+
     // Loads a 3D model (.glb, .gltf, or .obj), caches it, sets up shadows, and places it in the scene.
     load(url, scene, position = {x: 0, y: 0, z: 0}, scale = 1, name = '') {
         // 1. If already cached, clone and place instantly

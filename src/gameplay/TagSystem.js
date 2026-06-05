@@ -34,19 +34,20 @@ export class TagSystem {
 
         this.lastShotTime = now
 
-        // const origin = this.camera.position.clone()
         const origin = this.player.position.clone()
+        origin.y = 1.0 // Height of player center
 
         const direction = new THREE.Vector3()
-        // this.camera.getWorldDirection(direction)
-        this.player.getWorldDirection(direction)
+        this.camera.getWorldDirection(direction)
+        direction.y = 0 // Keep ray horizontal
+        direction.normalize()
 
         this.raycaster.set(origin, direction)
 
         console.log(direction)
 
         const hits =
-            this.raycaster.intersectObject(this.enemy)
+            this.raycaster.intersectObject(this.enemy, true)
 
         this.createDebugLine(
             origin,

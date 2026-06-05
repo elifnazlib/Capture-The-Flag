@@ -50,11 +50,11 @@ export class EnemyFSM {
 
         // Try normal movement first
         if (this.tryMove(forward)) {
-            this.enemy.lookAt(
-                targetPosition.x,
-                this.enemy.position.y,
-                targetPosition.z
-            )
+            // this.enemy.lookAt(
+            //     targetPosition.x,
+            //     this.enemy.position.y,
+            //     targetPosition.z
+            // )
 
             return
         }
@@ -219,6 +219,20 @@ export class EnemyFSM {
             this.enemy.position.copy(
                 nextPosition
             )
+
+            // Roll the ball!
+            if (this.enemy.ballMesh) {
+                const radius = 1.0
+                const distance = movement.length()
+                const angle = distance / radius
+
+                const up = new THREE.Vector3(0, 1, 0)
+                const axis = new THREE.Vector3().crossVectors(up, direction).normalize()
+
+                if (axis.lengthSq() > 0) {
+                    this.enemy.ballMesh.rotateOnWorldAxis(axis, angle)
+                }
+            }
 
             return true
         }

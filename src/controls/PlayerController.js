@@ -69,6 +69,9 @@ export class PlayerController {
             moveDirection.add(right)
         }
 
+        // Always align player group rotation with camera look direction
+        // this.player.rotation.y = this.cameraRotationY
+
         if (moveDirection.length() > 0) {
             moveDirection.normalize()
 
@@ -78,9 +81,21 @@ export class PlayerController {
             if (this.collisionSystem.canMove(nextPosition))
             {
                 this.player.position.copy(nextPosition)
-            }
 
-            this.player.rotation.y = this.cameraRotationY
+                // Roll the ball!
+                if (this.player.ballMesh) {
+                    const radius = 1.0
+                    const distance = movement.length()
+                    const angle = distance / radius
+
+                    const up = new THREE.Vector3(0, 1, 0)
+                    const axis = new THREE.Vector3().crossVectors(up, moveDirection).normalize()
+
+                    if (axis.lengthSq() > 0) {
+                        this.player.ballMesh.rotateOnWorldAxis(axis, angle)
+                    }
+                }
+            }
         }
 
         // Third-person camera follow

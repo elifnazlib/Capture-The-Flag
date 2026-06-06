@@ -31,13 +31,13 @@ export function setupLights(scene) {
     sun.shadow.mapSize.height = 1024
 
     // Shadow camera area
-    sun.shadow.camera.left = -60
-    sun.shadow.camera.right = 60
-    sun.shadow.camera.top = 60
-    sun.shadow.camera.bottom = -60
+    sun.shadow.camera.left = -120
+    sun.shadow.camera.right = 120
+    sun.shadow.camera.top = 120
+    sun.shadow.camera.bottom = -120
 
     sun.shadow.camera.near = 1
-    sun.shadow.camera.far = 120
+    sun.shadow.camera.far = 300
 
     scene.add(sun)
     scene.add(sun.target)

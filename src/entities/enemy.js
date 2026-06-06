@@ -3,7 +3,7 @@ import { assetLoader } from '../world/AssetManager.js'
 
 export function createEnemy() {
     const enemyGroup = new THREE.Group()
-    enemyGroup.position.set(10, 1, 30)
+    enemyGroup.position.set(10, 1, 60)
 
     // Temporary placeholder while loading
     const geometry = new THREE.SphereGeometry(1, 32, 32)

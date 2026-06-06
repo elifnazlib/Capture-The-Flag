@@ -3,7 +3,7 @@ import { assetLoader } from '../world/AssetManager.js'
 
 export function createPlayer() {
     const playerGroup = new THREE.Group()
-    playerGroup.position.set(-10, 1, -30)
+    playerGroup.position.set(-10, 1, -60)
 
     // Temporary placeholder while loading
     const geometry = new THREE.SphereGeometry(1, 32, 32)

@@ -9,6 +9,8 @@ export function createArena(scene) {
 
     const colliders = []
 
+    const arenaSize = 50
+
     const wallMaterial =
         new THREE.MeshStandardMaterial({
             color: 0x444444,
@@ -55,31 +57,28 @@ export function createArena(scene) {
     scene.add(blueBase)
 
     // Obstacles
-    const obstacles = [
-        { x: -10, z: -10 },
-        { x: 10, z: -10 },
-        { x: -10, z: 10 },
-        { x: 10, z: 10 },
+    const obstacleCount = 30
 
-        { x: -20, z: 0, width: 3, height: 5 },
-        { x: 20, z: 0, width: 3, height: 5 },
+    for (let i = 0; i < obstacleCount; i++) {
+        const safeZone = 25
 
-        // { x: 0, z: 0, width: 8, height: 3, depth: 8 }
-    ]
+        const x = randomRange(-arenaSize, arenaSize)
+        const z = randomRange(-arenaSize, arenaSize)
 
-    obstacles.forEach((data, index) => {
+        if (Math.abs(x) < safeZone && Math.abs(z) < safeZone) continue
+
+        const width = randomRange(2, 5)
+        const height = randomRange(2, 6)
+        const depth = randomRange(2, 5)
+
         const obstacle = createObstacle({
-            width: data.width || 4,
-            height: data.height || 4,
-            depth: data.depth || 4,
-            x: data.x,
-            y: (data.height || 4) / 2,
-            z: data.z
+            width,
+            height,
+            depth,
+            x,
+            y: height / 2,
+            z
         })
-
-        if (index < 3) {
-            obstacle.name = `Cube ${index + 1}`
-        }
 
         scene.add(obstacle)
 
@@ -87,7 +86,7 @@ export function createArena(scene) {
             new THREE.Box3().setFromObject(obstacle)
 
         colliders.push(obstacle)
-    })
+    }
 
     function randomRange(min, max) {
         return Math.random() * (max - min) + min
@@ -162,3 +161,7 @@ export function createArena(scene) {
 
     return colliders
 }
+
+// if (index < 3) {
+//     obstacle.name = `Cube ${index + 1}`
+// }

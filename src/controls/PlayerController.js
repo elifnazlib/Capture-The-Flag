@@ -9,8 +9,8 @@ export class PlayerController {
         this.input = input
         this.collisionSystem = collisionSystem
 
-        this.moveSpeed = 0.1
-        this.sprintSpeed = 0.18
+        this.moveSpeed = 0.08
+        this.sprintSpeed = 0.1
         this.mouseSensitivity = 0.002
 
         this.cameraRotationY = 0

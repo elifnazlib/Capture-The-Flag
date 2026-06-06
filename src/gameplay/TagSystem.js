@@ -71,7 +71,7 @@ export class TagSystem {
         this.enemy.position.set(
             10,
             1,
-            30
+            60
         )
     }
 

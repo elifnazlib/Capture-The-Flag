@@ -1,29 +1,28 @@
 import * as THREE from 'three'
 
-// Reusable obstacle function
+const textureLoader = new THREE.TextureLoader()
+
+const crateTexture = textureLoader.load('/public/crate.jpg')
+
+crateTexture.wrapS = THREE.RepeatWrapping
+crateTexture.wrapT = THREE.RepeatWrapping
+
 export function createObstacle({
                                    width = 2,
                                    height = 2,
                                    depth = 2,
-                                   color = 0x666666,
                                    x = 0,
                                    y = 1,
                                    z = 0
                                }) {
-    const geometry = new THREE.BoxGeometry(
-        width,
-        height,
-        depth
-    )
+
+    const geometry = new THREE.BoxGeometry(width, height, depth)
 
     const material = new THREE.MeshStandardMaterial({
-        color
+        map: crateTexture
     })
 
-    const obstacle = new THREE.Mesh(
-        geometry,
-        material
-    )
+    const obstacle = new THREE.Mesh(geometry, material)
 
     obstacle.position.set(x, y, z)
 

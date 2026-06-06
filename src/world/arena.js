@@ -161,7 +161,3 @@ export function createArena(scene) {
 
     return colliders
 }
-
-// if (index < 3) {
-//     obstacle.name = `Cube ${index + 1}`
-// }

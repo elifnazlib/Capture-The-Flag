@@ -9,42 +9,90 @@ export function setupStudentName(scene) {
             { x: 1.5, z: 3 }, { x: 3, z: 3 }
         ],
         'L': [
-            { x: 0, z: -3 }, { x: 0, z: -1.5 }, { x: 0, z: 0 }, { x: 0, z: 1.5 }, { x: 0, z: 3 },
-            { x: 1.5, z: 3 }, { x: 3, z: 3 }
+            { x: 0.7, z: -3 }, { x: 0.7, z: -1.5 }, { x: 0.7, z: 0 }, { x: 0.7, z: 1.5 }, { x: 0.7, z: 3 },
+            { x: 2.2, z: 3 }, { x: 3.7, z: 3 }
         ],
-        'I': [
-            { x: 0, z: -3.8 },
-            { x: 0, z: -1.5 }, { x: 0, z: 0 }, { x: 0, z: 1.5 }, { x: 0, z: 3 }
+        'İ': [
+            { x: 1.3, z: -5.6 },
+            { x: 1.3, z: -3 }, { x: 1.3, z: -1.5 }, { x: 1.3, z: 0 }, { x: 1.3, z: 1.5 }, { x: 1.3, z: 3 }
         ],
         'F': [
+            { x: -1, z: -3 }, { x: -1, z: -1.5 }, { x: -1, z: 0 }, { x: -1, z: 1.5 }, { x: -1, z: 3 },
+            { x: 0.5, z: -3 }, { x: 2, z: -3 },
+            { x: 0.5, z: 0 }
+        ],
+        ' ': [],
+        'N': [
             { x: 0, z: -3 }, { x: 0, z: -1.5 }, { x: 0, z: 0 }, { x: 0, z: 1.5 }, { x: 0, z: 3 },
-            { x: 1.5, z: -3 }, { x: 3, z: -3 },
-            { x: 1.5, z: 0 }
+            { x: 1, z: -1.5 }, { x: 2, z: 0 }, { x: 3, z: 1.5 },
+            { x: 4, z: -3 }, { x: 4, z: -1.5 }, { x: 4, z: 0 }, { x: 4, z: 1.5 }, { x: 4, z: 3 }
+        ],
+        'A': [
+            { x: 1, z: -3 }, { x: 1, z: -1.5 }, { x: 1, z: 0 }, { x: 1, z: 1.5 }, { x: 1, z: 3 },
+            { x: 2.5, z: -3 }, { x: 4, z: -3 },
+            { x: 4, z: -1.5 }, { x: 4, z: 0 }, { x: 4, z: 1.5 }, { x: 4, z: 3 },
+            { x: 2.5, z: 0 }
+        ],
+        'Z': [
+            { x: 1, z: -3 }, { x: 2.5, z: -3 }, { x: 4, z: -3 },
+            { x: 3, z: -1.5 }, { x: 2.25, z: 0 }, { x: 1.5, z: 1.5 },
+            { x: 1, z: 3 }, { x: 2.5, z: 3 }, { x: 4, z: 3 }
+        ],
+        'I': [
+            { x: 1.5, z: -3 }, { x: 1.5, z: -1.5 }, { x: 1.5, z: 0 }, { x: 1.5, z: 1.5 }, { x: 1.5, z: 3 }
+        ],
+        'B': [
+            { x: -1, z: -3 }, { x: -1, z: -1.5 }, { x: -1, z: 0 }, { x: -1, z: 1.5 }, { x: -1, z: 3 },
+            { x: 0.5, z: -3 }, { x: 2, z: -3 },
+            { x: 2, z: -1.5 },
+            { x: 0.5, z: 0 }, { x: 2, z: 0 },
+            { x: 2, z: 1.5 },
+            { x: 0.5, z: 3 }, { x: 2, z: 3 }
+        ],
+        'Ö': [
+            { x: 0.3, z: -5.6 }, { x: 1.9, z: -5.6 },
+            { x: -0.3, z: -3 }, { x: 1.2, z: -3 }, { x: 2.7, z: -3 },
+            { x: -0.3, z: -1.5 }, { x: 2.7, z: -1.5 },
+            { x: -0.3, z: 0 }, { x: 2.7, z: 0 },
+            { x: -0.3, z: 1.5 }, { x: 2.7, z: 1.5 },
+            { x: -0.3, z: 3 }, { x: 1.2, z: 3 }, { x: 2.7, z: 3 }
+        ],
+        'K': [
+            { x: 0, z: -3 }, { x: 0, z: -1.5 }, { x: 0, z: 0 }, { x: 0, z: 1.5 }, { x: 0, z: 3 },
+            { x: 1.5, z: -1.5 }, { x: 3, z: -3 },
+            { x: 1.5, z: 1.5 }, { x: 3, z: 3 }
         ]
     };
 
-    // Position letters sequentially with spacing
-    const word = ['E', 'L', 'I', 'F'];
+    // Position letters for each word on a separate row, centered
+    const words = ["ELİF", "NAZLI", "BÖKE"];
     const letterWidth = 3;
     const letterSpacing = 2.5;
-
-    // Total width of all letters and gaps:
-    // 4 letters of width 3, and 3 gaps of 2.5 = 12 + 7.5 = 19.5
-    // Centering it around x = 70:
-    const startX = 140 - 19.5 / 2;
+    const rowSpacing = 12; // Vertical spacing between rows along Z-axis
     const yCoord = -4.8;
-    const zBase = 0;
 
-    let currentX = startX;
+    words.forEach((wordStr, rowIndex) => {
+        const word = wordStr.split('');
+        // Total width of all letters and gaps for this word:
+        const totalWidth = word.length * letterWidth + (word.length - 1) * letterSpacing;
+        // Centering it around x = 70:
+        const startX = 140 - totalWidth / 2;
+        // Center the middle row (rowIndex 1) at z = 0, row 0 at z = -10, row 2 at z = 10
+        const zBase = (rowIndex - 1) * rowSpacing;
 
-    word.forEach((char) => {
-        const points = letters[char];
-        points.forEach((pt) => {
-            const worldX = currentX + pt.x;
-            const worldZ = zBase + pt.z;
-            // Load the Bee asset at this position with scale 0.5 to look like small modules forming the letter
-            assetLoader.load('/public/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
+        let currentX = startX;
+
+        word.forEach((char) => {
+            const points = letters[char];
+            if (points) {
+                points.forEach((pt) => {
+                    const worldX = currentX + pt.x;
+                    const worldZ = zBase + pt.z;
+                    // Load the rock asset at this position with scale 0.5 to look like small modules forming the letter
+                    assetLoader.load('/public/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
+                });
+            }
+            currentX += letterWidth + letterSpacing;
         });
-        currentX += letterWidth + letterSpacing;
     });
 }

@@ -57,10 +57,55 @@ createSettingsUI(lights, cameraState);
 const ground = createGround();
 scene.add(ground);
 
-assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1, 0,'Bee');
-
 const colliders = createArena(scene)
 setupStudentName(scene)
+
+// assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1, 0,'Bee');
+assetLoader.loadModel('/chest.glb')
+    .then((chest) => {
+
+        chest.position.set(-8, 0, -7)
+        chest.scale.setScalar(0.05)
+        chest.rotation.y = Math.PI / 2
+
+        scene.add(chest)
+
+        chest.userData.boundingBox =
+            new THREE.Box3().setFromObject(chest)
+
+        colliders.push(chest)
+        chest.name = 'Chest';
+    })
+
+assetLoader.loadModel('/castle.glb')
+    .then((castle) => {
+
+        castle.position.set(10, 0, -5)
+        castle.scale.setScalar(1.5)
+
+        scene.add(castle)
+
+        castle.userData.boundingBox =
+            new THREE.Box3().setFromObject(castle)
+
+        colliders.push(castle)
+        castle.name = 'Castle';
+    })
+
+assetLoader.loadModel('/shell.glb')
+    .then((shell) => {
+
+        shell.position.set(-5, 0, 6)
+        shell.scale.setScalar(0.05)
+
+        scene.add(shell)
+
+        shell.userData.boundingBox =
+            new THREE.Box3().setFromObject(shell)
+
+        colliders.push(shell)
+        shell.name = 'Shell';
+    })
 
 // Camera Transition States and Variables
 let cameraMode = 'FOLLOW'; // 'FOLLOW', 'TRANSITION_TO_NAME', 'SHOW_NAME', 'TRANSITION_TO_FOLLOW'

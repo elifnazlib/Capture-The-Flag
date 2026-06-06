@@ -284,24 +284,19 @@ export function createSettingsUI(lights, cameraState) {
     selectObj.appendChild(optNone)
 
     const optCustom = document.createElement('option');
-    optCustom.value = 'Bee';     // Must exactly match the object.name from Step 1
-    optCustom.textContent = 'Bee'; // Text visible to the user in the dropdown
+    optCustom.value = 'Chest';     // Must exactly match the object.name from Step 1
+    optCustom.textContent = 'Chest'; // Text visible to the user in the dropdown
     selectObj.appendChild(optCustom);
 
     const optCube1 = document.createElement('option')
-    optCube1.value = 'Cube 1'
-    optCube1.textContent = 'Cube 1'
+    optCube1.value = 'Castle'
+    optCube1.textContent = 'Castle'
     selectObj.appendChild(optCube1)
 
     const optCube2 = document.createElement('option')
-    optCube2.value = 'Cube 2'
-    optCube2.textContent = 'Cube 2'
+    optCube2.value = 'Shell'
+    optCube2.textContent = 'Shell'
     selectObj.appendChild(optCube2)
-
-    const optCube3 = document.createElement('option')
-    optCube3.value = 'Cube 3'
-    optCube3.textContent = 'Cube 3'
-    selectObj.appendChild(optCube3)
 
     rowSelectObj.appendChild(labelSelect)
     rowSelectObj.appendChild(selectObj)

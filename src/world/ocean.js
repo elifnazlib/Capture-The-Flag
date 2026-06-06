@@ -4,10 +4,10 @@ export function createOcean() {
 
     const geometry =
         new THREE.PlaneGeometry(
-            1000,
-            750,
-            64,
-            64
+            10000,
+            10000,
+            128,
+            128
         )
 
     const material =
@@ -18,11 +18,11 @@ export function createOcean() {
                 time: { value: 0 },
 
                 deepColor: {
-                    value: new THREE.Color(0x1383f2)
+                    value: new THREE.Color(0x4ea0f2)
                 },
 
                 shallowColor: {
-                    value: new THREE.Color(0x3399ff)
+                    value: new THREE.Color(0xb7d7f7)
                 }
             },
 

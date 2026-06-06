@@ -49,6 +49,25 @@ const cameraState = {
     free: freeCamera
 };
 
+const listener = new THREE.AudioListener()
+
+camera.add(listener)
+
+const oceanSound = new THREE.Audio(listener)
+
+const audioLoader = new THREE.AudioLoader()
+
+audioLoader.load('/oceanBG.wav', (buffer) => {
+
+    oceanSound.setBuffer(buffer)
+
+    oceanSound.setLoop(true)
+
+    oceanSound.setVolume(0.1)
+
+    oceanSound.play()
+})
+
 const renderer = setupRenderer();
 
 const lights = setupLights(scene);

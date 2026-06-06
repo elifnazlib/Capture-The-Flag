@@ -23,10 +23,10 @@ export class FlagSystem {
         this.centerPosition = new THREE.Vector3(0, 0, 0)
 
         // Blue base (enemy's)
-        this.enemyBase = new THREE.Vector3(0, 0, 35)
+        this.enemyBase = new THREE.Vector3(0, 0, 70)
 
         // Red base (player's)
-        this.playerBase = new THREE.Vector3(0, 0, -35)
+        this.playerBase = new THREE.Vector3(0, 0, -70)
 
         this.winText = document.createElement('div')
 

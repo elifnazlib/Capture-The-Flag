@@ -31,8 +31,8 @@ export function setupStudentName(scene) {
     // Total width of all letters and gaps:
     // 4 letters of width 3, and 3 gaps of 2.5 = 12 + 7.5 = 19.5
     // Centering it around x = 70:
-    const startX = 70 - 19.5 / 2;
-    const yCoord = 0.2;
+    const startX = 140 - 19.5 / 2;
+    const yCoord = -4.8;
     const zBase = 0;
 
     let currentX = startX;
@@ -43,7 +43,7 @@ export function setupStudentName(scene) {
             const worldX = currentX + pt.x;
             const worldZ = zBase + pt.z;
             // Load the Bee asset at this position with scale 0.5 to look like small modules forming the letter
-            assetLoader.load('/public/Bee.gltf', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
+            assetLoader.load('/public/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
         });
         currentX += letterWidth + letterSpacing;
     });

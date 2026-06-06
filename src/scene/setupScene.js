@@ -19,7 +19,7 @@ export function setupScene() {
         new THREE.Fog(
             fogColor,
             40,   // start distance
-            75   // end distance
+            275   // end distance
         )
 
     return scene

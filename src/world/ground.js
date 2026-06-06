@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 export function createGround() {
-    const geometry = new THREE.PlaneGeometry(100, 100)
+    const geometry = new THREE.PlaneGeometry(210, 210)
 
     const textureLoader = new THREE.TextureLoader();
 

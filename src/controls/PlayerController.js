@@ -100,7 +100,7 @@ export class PlayerController {
 
         // Third-person camera follow
         if (this.cameraMode !== 'NAME_VIEW') {
-            const cameraOffset = new THREE.Vector3(0, 6, -8)
+            const cameraOffset = new THREE.Vector3(0, 4.5, -8)
 
             cameraOffset.applyAxisAngle(
                 new THREE.Vector3(0, 1, 0),

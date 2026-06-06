@@ -57,7 +57,7 @@ createSettingsUI(lights, cameraState);
 const ground = createGround();
 scene.add(ground);
 
-assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1, 'Bee');
+assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1, 0,'Bee');
 
 const colliders = createArena(scene)
 setupStudentName(scene)
@@ -66,8 +66,8 @@ setupStudentName(scene)
 let cameraMode = 'FOLLOW'; // 'FOLLOW', 'TRANSITION_TO_NAME', 'SHOW_NAME', 'TRANSITION_TO_FOLLOW'
 let transitionProgress = 0;
 const transitionDuration = 1.5; // seconds
-const nameViewPos = new THREE.Vector3(70, 25, 0); // Top-down view position
-const nameViewTarget = new THREE.Vector3(70, 0.2, 0); // Center of the name
+const nameViewPos = new THREE.Vector3(140, 25, 0); // Top-down view position
+const nameViewTarget = new THREE.Vector3(140, 0.2, 0); // Center of the name
 
 const startPosition = new THREE.Vector3();
 const startQuaternion = new THREE.Quaternion();

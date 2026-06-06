@@ -21,7 +21,7 @@ export class EnemyFSM {
         this.homePosition = new THREE.Vector3(
             0,
             1,
-            35
+            70
         )
     }
 

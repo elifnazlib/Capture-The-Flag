@@ -5,38 +5,43 @@ export function createGround() {
 
     const textureLoader = new THREE.TextureLoader();
 
-    // Load diffuse map
-    const diffuseMap = textureLoader.load('/sand1/everytexture.com-stock-nature-sand-00029-diffuse-1024.jpg');
+    // load diffuse map for the base color of the sand
+    const diffuseMap = textureLoader.load('/sand1/sand-diffuse-1024.jpg');
+    diffuseMap.colorSpace = THREE.SRGBColorSpace;
     diffuseMap.wrapS = THREE.RepeatWrapping;
     diffuseMap.wrapT = THREE.RepeatWrapping;
-    diffuseMap.repeat.set(8, 8); // Tile 8 times across the 100x100 plane
+    diffuseMap.repeat.set(8, 8);
 
-    // Load normal map for authentic lighting details
-    const normalMap = textureLoader.load('/sand1/everytexture.com-stock-nature-sand-00029-normal-1024.jpg');
+    // load normal map for adding lighting detail without increasing geometry complexity
+    const normalMap = textureLoader.load('/sand1/sand-normal-1024.jpg');
     normalMap.wrapS = THREE.RepeatWrapping;
     normalMap.wrapT = THREE.RepeatWrapping;
     normalMap.repeat.set(8, 8);
 
-    // Load bump map for additional high-frequency micro details
-    const bumpMap = textureLoader.load('/sand1/everytexture.com-stock-nature-sand-00029-bump-1024.jpg');
+    // load bump map for additional small scale height variation
+    const bumpMap = textureLoader.load('/sand1/sand-bump-1024.jpg');
     bumpMap.wrapS = THREE.RepeatWrapping;
     bumpMap.wrapT = THREE.RepeatWrapping;
     bumpMap.repeat.set(8, 8);
 
+     // physically based material for realistic lighting
     const material = new THREE.MeshStandardMaterial({
         map: diffuseMap,
         normalMap: normalMap,
-        normalScale: new THREE.Vector2(0.4, 0.4),
+        normalScale: new THREE.Vector2(0.7, 0.7),
         bumpMap: bumpMap,
         bumpScale: 0.03,
-        roughness: 0.9,
-        metalness: 0.1
+        roughness: 1.0,
+        metalness: 0.0
     })
 
+    // combine geometry and material into a renderable mesh
     const ground = new THREE.Mesh(geometry, material)
 
+    // rotate the plane so it lies horizontally on the ground
     ground.rotation.x = -Math.PI / 2
 
+    // allow the ground to receive shadows from other objects
     ground.receiveShadow = true
 
     return ground

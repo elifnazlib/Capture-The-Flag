@@ -35,25 +35,15 @@ export function createOcean() {
                 void main() {
 
                     vUv = uv;
-
                     vec3 pos = position;
 
-                    float wave =
-                        sin(pos.x * 0.1 + time * 1.5)
-                        * 0.6;
-
-                    wave +=
-                        cos(pos.y * 0.1 + time * 1.2)
-                        * 0.6;
+                    float wave = sin(pos.x * 0.1 + time * 1.5) * 0.6;
+                    wave += cos(pos.y * 0.1 + time * 1.2) * 0.6;
 
                     pos.z += wave;
-
                     vElevation = wave;
 
-                    gl_Position =
-                        projectionMatrix *
-                        modelViewMatrix *
-                        vec4(pos, 1.0);
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
                 }
             `,
 
@@ -67,33 +57,13 @@ export function createOcean() {
 
                 void main() {
 
-                    float mixStrength =
-                        (vElevation + 1.2) / 2.4;
+                    float mixStrength = (vElevation + 1.2) / 2.4;
 
-                    vec3 color =
-                        mix(
-                            deepColor,
-                            shallowColor,
-                            mixStrength
-                        );
+                    vec3 color = mix( deepColor, shallowColor, mixStrength );
 
-                    /*
-                     * vUv.y:
-                     * 0.0 = bir kenar
-                     * 1.0 = diğer kenar
-                     *
-                     * İlk 20%'lik bölgede
-                     * su yavaş yavaş görünür hale gelir.
-                     */
-                    float alpha =
-                        smoothstep(
-                            0.0,
-                            0.2,
-                            vUv.y
-                        );
+                    float alpha = smoothstep( 0.0, 0.2, vUv.y );
 
-                    fragColor =
-                        vec4(color, alpha);
+                    fragColor = vec4(color, alpha);
                 }
             `,
 

@@ -4,7 +4,7 @@ import * as THREE from 'three'
 export function createBase(color, x, z) {
     const group = new THREE.Group()
 
-    // Base platform
+    // base platform
     const platformGeometry = new THREE.CylinderGeometry(
         4,
         4,
@@ -26,7 +26,7 @@ export function createBase(color, x, z) {
 
     group.add(platform)
 
-    // Flag pole
+    // flag pole
     const poleGeometry = new THREE.CylinderGeometry(
         0.1,
         0.1,
@@ -45,9 +45,7 @@ export function createBase(color, x, z) {
 
     pole.position.y = 3
 
-    // group.add(pole)
-
-    // Flag
+    // flag
     const flagGeometry = new THREE.BoxGeometry(
         1.5,
         1,
@@ -65,8 +63,6 @@ export function createBase(color, x, z) {
     )
 
     flag.position.set(0.8, 4, 0)
-
-    // group.add(flag)
 
     group.position.set(x, 0, z)
 

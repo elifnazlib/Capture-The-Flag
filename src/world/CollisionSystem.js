@@ -17,12 +17,10 @@ export class CollisionSystem {
             )
         )
 
-        for (const collider of this.colliders) {
-            if (
-                this.tempBox.intersectsBox(
-                    collider.userData.boundingBox
-                )
-            ) {
+        for (const collider of this.colliders)
+        {
+            if (this.tempBox.intersectsBox(collider.userData.boundingBox))
+            {
                 return false
             }
         }

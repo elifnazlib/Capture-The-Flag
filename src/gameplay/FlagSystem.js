@@ -10,8 +10,7 @@ export class FlagSystem {
         this.score = 0
         this.enemyScore = 0
 
-        this.scoreUI.textContent =
-            `Player: 0 | Enemy: 0`
+        this.scoreUI.textContent = `Player: 0 | Enemy: 0`
 
         this.winScore = 5
         this.gameOver = false
@@ -22,10 +21,10 @@ export class FlagSystem {
 
         this.centerPosition = new THREE.Vector3(0, 0, 0)
 
-        // Blue base (enemy's)
+        // blue base (enemy's)
         this.enemyBase = new THREE.Vector3(0, 0, 70)
 
-        // Red base (player's)
+        // red base (player's)
         this.playerBase = new THREE.Vector3(0, 0, -70)
 
         this.winText = document.createElement('div')
@@ -67,103 +66,76 @@ export class FlagSystem {
         const playerPos = this.player.position
         const enemyPos = this.enemy.position
 
-        // Pickup dropped flag
+        // pickup dropped flag
         if (!this.carrier) {
 
-            if (
-                playerPos.distanceTo(this.flag.position) < 2
-            ) {
+            if (playerPos.distanceTo(this.flag.position) < 2)
+            {
                 this.setCarrier(this.player)
             }
 
-            else if (
-                enemyPos.distanceTo(this.flag.position) < 2
-            ) {
+            else if (enemyPos.distanceTo(this.flag.position) < 2)
+            {
                 this.setCarrier(this.enemy)
             }
         }
 
-        // Follow carrier
-        if (this.carrier) {
-
-            this.flag.position.copy(
-                this.carrier.position
-            )
-
+        // follow carrier
+        if (this.carrier)
+        {
+            this.flag.position.copy(this.carrier.position)
             this.flag.position.y = 3
         }
 
-        // Steal logic
-        const distance =
-            playerPos.distanceTo(enemyPos)
+        // steal logic
+        const distance = playerPos.distanceTo(enemyPos)
 
-        if (
-            distance < 2 &&
-            this.canSteal()
-        ) {
-
-            if (this.enemyHasFlag()) {
-
-                console.log(
-                    'Player stole flag'
-                )
-
+        if (distance < 2 && this.canSteal())
+        {
+            if (this.enemyHasFlag())
+            {
+                console.log('Player stole flag')
                 this.setCarrier(this.player)
             }
 
-            else if (this.playerHasFlag()) {
-
-                console.log(
-                    'Enemy stole flag'
-                )
-
+            else if (this.playerHasFlag())
+            {
+                console.log('Enemy stole flag')
                 this.setCarrier(this.enemy)
             }
         }
 
-        // Player score
+        // player score
         if (this.playerHasFlag()) {
 
-            const distanceToBase =
-                playerPos.distanceTo(
-                    this.playerBase
-                )
+            const distanceToBase = playerPos.distanceTo(this.playerBase)
 
-            if (distanceToBase < 5) {
-
-                console.log(
-                    'Player scored'
-                )
+            if (distanceToBase < 5)
+            {
+                console.log('Player scored')
 
                 this.score++
                 this.checkWin()
 
-                this.scoreUI.textContent =
-                    `Player: ${this.score} | Enemy: ${this.enemyScore}`
+                this.scoreUI.textContent = `Player: ${this.score} | Enemy: ${this.enemyScore}`
 
                 this.resetFlag()
             }
         }
 
-        // Enemy score
-        if (this.enemyHasFlag()) {
+        // enemy score
+        if (this.enemyHasFlag())
+        {
+            const distanceToBase = enemyPos.distanceTo(this.enemyBase)
 
-            const distanceToBase =
-                enemyPos.distanceTo(
-                    this.enemyBase
-                )
-
-            if (distanceToBase < 5) {
-
-                console.log(
-                    'Enemy scored'
-                )
+            if (distanceToBase < 5)
+            {
+                console.log('Enemy scored')
 
                 this.enemyScore++
                 this.checkWin()
 
-                this.scoreUI.textContent =
-                    `Player: ${this.score} | Enemy: ${this.enemyScore}`
+                this.scoreUI.textContent = `Player: ${this.score} | Enemy: ${this.enemyScore}`
 
                 this.resetFlag()
             }
@@ -171,15 +143,9 @@ export class FlagSystem {
     }
 
     resetFlag() {
-
         console.log('Flag reset to center')
         this.carrier = null
-        this.flag.position.set(
-            this.centerPosition.x,
-            0,
-            this.centerPosition.z
-        )
-
+        this.flag.position.set(this.centerPosition.x, 0, this.centerPosition.z)
         this.flag.position.y = 0
     }
 
@@ -196,39 +162,36 @@ export class FlagSystem {
     }
 
     setCarrier(carrier) {
-
         this.carrier = carrier
 
-        this.stealProtectionUntil =
-            Date.now() + 2500
+        this.stealProtectionUntil = Date.now() + 2500
 
-        if (carrier === this.player) {
+        if (carrier === this.player)
+        {
             console.log('Player has flag')
         }
 
-        if (carrier === this.enemy) {
+        if (carrier === this.enemy)
+        {
             console.log('Enemy has flag')
         }
     }
 
     dropFlag(position) {
-
         console.log('Flag dropped')
-
         this.carrier = null
-
         this.flag.position.copy(position)
-
         this.flag.position.y = 0
     }
 
     checkWin() {
-
-        if (this.score >= this.winScore) {
+        if (this.score >= this.winScore)
+        {
             this.endGame('PLAYER WINS!')
         }
 
-        if (this.enemyScore >= this.winScore) {
+        if (this.enemyScore >= this.winScore)
+        {
             this.endGame('ENEMY WINS!')
         }
     }

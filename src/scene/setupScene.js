@@ -5,22 +5,17 @@ export function setupScene() {
 
     const loader = new THREE.CubeTextureLoader()
     const texture = loader.load([
-        '/public/skybox/right.bmp',
-        '/public/skybox/left.bmp',
-        '/public/skybox/top.bmp',
-        '/public/skybox/bottom.bmp',
-        '/public/skybox/front.bmp',
-        '/public/skybox/back.bmp'
+        '/skybox/right.bmp',
+        '/skybox/left.bmp',
+        '/skybox/top.bmp',
+        '/skybox/bottom.bmp',
+        '/skybox/front.bmp',
+        '/skybox/back.bmp'
     ])
     scene.background = texture
 
     const fogColor = 0xd5eaf2;
-    scene.fog =
-        new THREE.Fog(
-            fogColor,
-            40,   // start distance
-            275   // end distance
-        )
+    scene.fog = new THREE.Fog(fogColor, 40, 275)
 
     return scene
 }

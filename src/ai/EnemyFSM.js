@@ -18,90 +18,52 @@ export class EnemyFSM {
 
         this.speed = 0.05
 
-        this.homePosition = new THREE.Vector3(
-            0,
-            1,
-            70
-        )
+        this.homePosition = new THREE.Vector3(0, 1, 70)
     }
 
     changeState(newState) {
         if (this.state === newState) return
-
-        console.log(
-            `Enemy State: ${this.state} -> ${newState}`
-        )
-
+        console.log(`Enemy State: ${this.state} -> ${newState}`)
         this.state = newState
     }
 
     moveTowards(targetPosition) {
-        const forward =
-            targetPosition.clone()
-                .sub(this.enemy.position)
+        const forward = targetPosition.clone().sub(this.enemy.position)
 
         forward.y = 0
 
-        if (forward.length() < 0.01) {
-            return
-        }
+        if (forward.length() < 0.01) return
 
         forward.normalize()
 
-        // Try normal movement first
-        if (this.tryMove(forward)) {
-            // this.enemy.lookAt(
-            //     targetPosition.x,
-            //     this.enemy.position.y,
-            //     targetPosition.z
-            // )
-
-            return
-        }
+        // try normal movement first
+        if (this.tryMove(forward)) return
 
         // 45 degree left
         const left = forward.clone()
 
-        left.applyAxisAngle(
-            new THREE.Vector3(0, 1, 0),
-            Math.PI / 4
-        )
+        left.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 4)
 
-        if (this.tryMove(left)) {
-            return
-        }
+        if (this.tryMove(left)) return
 
         // 45 degree right
         const right = forward.clone()
 
-        right.applyAxisAngle(
-            new THREE.Vector3(0, 1, 0),
-            -Math.PI / 4
-        )
+        right.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 4)
 
-        if (this.tryMove(right)) {
-            return
-        }
+        if (this.tryMove(right)) return
 
         // 90 degree left
         const hardLeft = forward.clone()
 
-        hardLeft.applyAxisAngle(
-            new THREE.Vector3(0, 1, 0),
-            Math.PI / 2
-        )
+        hardLeft.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2)
 
-        if (this.tryMove(hardLeft)) {
-            return
-        }
+        if (this.tryMove(hardLeft)) return
 
         // 90 degree right
         const hardRight = forward.clone()
 
-        hardRight.applyAxisAngle(
-            new THREE.Vector3(0, 1, 0),
-            -Math.PI / 2
-        )
+        hardRight.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2)
 
         this.tryMove(hardRight)
     }
@@ -115,10 +77,7 @@ export class EnemyFSM {
             }
         }
 
-        const playerDistance =
-            this.enemy.position.distanceTo(
-                this.player.position
-            )
+        const playerDistance = this.enemy.position.distanceTo(this.player.position)
 
         switch (this.state) {
             case EnemyState.SEEK_FLAG:
@@ -136,19 +95,13 @@ export class EnemyFSM {
     }
 
     updateSeekFlag(playerDistance) {
-        if (playerDistance < 8) {
-            this.changeState(
-                EnemyState.CHASE_PLAYER
-            )
+        if (playerDistance < 8)
+        {
+            this.changeState(EnemyState.CHASE_PLAYER)
             return
         }
 
         this.moveTowards(this.flag.position)
-
-        const flagDistance =
-            this.enemy.position.distanceTo(
-                this.flag.position
-            )
 
         if (this.flagSystem.enemyHasFlag())
         {
@@ -159,68 +112,41 @@ export class EnemyFSM {
     updateChasePlayer(playerDistance) {
         this.moveTowards(this.player.position)
 
-        if (playerDistance > 15) {
-            this.changeState(
-                EnemyState.SEEK_FLAG
-            )
+        if (playerDistance > 15)
+        {
+            this.changeState(EnemyState.SEEK_FLAG)
         }
     }
 
     updateReturnHome() {
 
-        if (
-            !this.flagSystem.enemyHasFlag()
-        ) {
-
-            this.changeState(
-                EnemyState.SEEK_FLAG
-            )
-
+        if (!this.flagSystem.enemyHasFlag())
+        {
+            this.changeState(EnemyState.SEEK_FLAG)
             return
         }
 
-        this.moveTowards(
-            this.homePosition
-        )
+        this.moveTowards(this.homePosition)
+        const homeDistance = this.enemy.position.distanceTo(this.homePosition)
 
-        const homeDistance =
-            this.enemy.position.distanceTo(
-                this.homePosition
-            )
-
-        if (homeDistance < 2) {
-
-            console.log(
-                'Enemy captured the flag!'
-            )
-
+        if (homeDistance < 2)
+        {
+            console.log('Enemy captured the flag!')
             this.flagSystem.resetFlag()
-
-            this.changeState(
-                EnemyState.SEEK_FLAG
-            )
+            this.changeState(EnemyState.SEEK_FLAG)
         }
     }
 
     tryMove(direction) {
-        const movement =
-            direction.clone()
-                .multiplyScalar(this.speed)
+        const movement = direction.clone().multiplyScalar(this.speed)
 
-        const nextPosition =
-            this.enemy.position.clone()
-                .add(movement)
+        const nextPosition = this.enemy.position.clone().add(movement)
 
-        if (
-            this.collisionSystem.canMove(
-                nextPosition
-            )
-        ) {
-            this.enemy.position.copy(
-                nextPosition
-            )
+        if (this.collisionSystem.canMove(nextPosition))
+        {
+            this.enemy.position.copy(nextPosition)
 
-            // Roll the ball!
+            // roll the ball
             if (this.enemy.ballMesh) {
                 const radius = 1.0
                 const distance = movement.length()
@@ -229,7 +155,8 @@ export class EnemyFSM {
                 const up = new THREE.Vector3(0, 1, 0)
                 const axis = new THREE.Vector3().crossVectors(up, direction).normalize()
 
-                if (axis.lengthSq() > 0) {
+                if (axis.lengthSq() > 0)
+                {
                     this.enemy.ballMesh.rotateOnWorldAxis(axis, angle)
                 }
             }

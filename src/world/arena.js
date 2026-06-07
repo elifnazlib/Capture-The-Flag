@@ -48,15 +48,15 @@ export function createArena(scene) {
         colliders.push(mesh)
     })
 
-    // Red base
+    // red base
     const redBase = createBase(0xff3333, 0, -70)
     scene.add(redBase)
 
-    // Blue base
+    // blue base
     const blueBase = createBase(0x3333ff, 0, 70)
     scene.add(blueBase)
 
-    // Obstacles
+    // obstacles
     const obstacleCount = 30
 
     for (let i = 0; i < obstacleCount; i++) {
@@ -106,7 +106,7 @@ export function createArena(scene) {
 
             const d = row * rowSpacing
 
-            // Dış sıra büyük, iç sıra küçük
+            // outer row is large, inner row is small
             const minScale = 0.6 - row * 0.1
             const maxScale = 1.0 - row * 0.1
 
@@ -131,7 +131,7 @@ export function createArena(scene) {
                 const scale = randomRange(minScale, maxScale)
                 const rotation = randomRange(0, Math.PI * 2)
 
-                // 1) AĞAÇ
+                // palm tree
                 assetLoader.load(
                     '/palmTree.glb',
                     scene,
@@ -140,7 +140,7 @@ export function createArena(scene) {
                     rotation
                 )
 
-                // 2) ARAYA KAYA (her ağaç noktasında değil, %15 ihtimal)
+                // rocks in some places for variety
                 if (chance(0.15)) {
 
                     assetLoader.load(

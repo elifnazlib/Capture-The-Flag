@@ -11,17 +11,19 @@ void main() {
     vec2 uv = vUv;
     vec4 color = texture(tDiffuse, uv);
 
-    // Toon shading color quantization/banding (4 levels)
-    vec3 toonColor = floor(color.rgb * 4.0) / 4.0;
+    // color quantization for 4 levels
+    float levels = 4.0;
+    vec3 brightened = min(color.rgb * 1.1, vec3(1.0));
+    vec3 toonColor = floor(brightened * levels + 0.5) / levels;
 
-    // Sobel Filter for outline detection
+    // applying sobel filter for outline detection
     float stepX = 1.0 / uResolution.x;
     float stepY = 1.0 / uResolution.y;
 
     float gX = 0.0;
     float gY = 0.0;
 
-    // Sobel operator kernels
+    // sobel operator kernels
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
             vec4 c = texture(tDiffuse, uv + vec2(float(i) * stepX, float(j) * stepY));
@@ -42,9 +44,10 @@ void main() {
 
     float edge = sqrt(gX * gX + gY * gY);
 
-    // High contrast toon colors and black outlines
+    // high contrast toon colors and black outlines
     vec3 finalColor = toonColor;
-    if (edge > 0.25) {
+    if (edge > 0.4)
+    {
         finalColor = vec3(0.0);
     }
 

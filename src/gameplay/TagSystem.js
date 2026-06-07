@@ -17,8 +17,10 @@ export class TagSystem {
 
         window.addEventListener(
             'mousedown',
-            (event) => {
-                if (event.button === 0) {
+            (event) =>
+            {
+                if (event.button === 0)
+                {
                     this.tryShoot()
                 }
             }
@@ -28,33 +30,28 @@ export class TagSystem {
     tryShoot() {
         const now = Date.now()
 
-        if (now - this.lastShotTime < this.cooldown) {
-            return
-        }
+        if (now - this.lastShotTime < this.cooldown) return
 
         this.lastShotTime = now
 
         const origin = this.player.position.clone()
-        origin.y = 1.0 // Height of player center
+        origin.y = 1.0 // height of player center
 
         const direction = new THREE.Vector3()
         this.camera.getWorldDirection(direction)
-        direction.y = 0 // Keep ray horizontal
+        direction.y = 0 // keep ray horizontal
         direction.normalize()
 
         this.raycaster.set(origin, direction)
 
         console.log(direction)
 
-        const hits =
-            this.raycaster.intersectObject(this.enemy, true)
+        const hits = this.raycaster.intersectObject(this.enemy, true)
 
-        this.createDebugLine(
-            origin,
-            direction
-        )
+        this.createDebugLine(origin, direction)
 
-        if (hits.length > 0) {
+        if (hits.length > 0)
+        {
             console.log('Enemy tagged!')
 
             if (this.flagSystem.enemyHasFlag())
@@ -68,42 +65,29 @@ export class TagSystem {
     }
 
     respawnEnemy() {
-        this.enemy.position.set(
-            10,
-            1,
-            60
-        )
+        this.enemy.position.set(10, 1, 60)
     }
 
     createDebugLine(origin, direction) {
-        if (this.debugLine) {
+        if (this.debugLine)
+        {
             this.scene.remove(this.debugLine)
         }
 
-        const end = origin.clone().add(
-            direction.clone().multiplyScalar(50)
-        )
+        const end = origin.clone().add(direction.clone().multiplyScalar(50))
 
-        const geometry =
-            new THREE.BufferGeometry().setFromPoints([
-                origin,
-                end
-            ])
+        const geometry = new THREE.BufferGeometry().setFromPoints([origin, end])
 
-        const material =
-            new THREE.LineBasicMaterial({
-                color: 0xffff00
-            })
+        const material = new THREE.LineBasicMaterial({color: 0xffff00})
 
-        this.debugLine = new THREE.Line(
-            geometry,
-            material
-        )
+        this.debugLine = new THREE.Line(geometry, material)
 
         this.scene.add(this.debugLine)
 
-        setTimeout(() => {
-            if (this.debugLine) {
+        setTimeout(() =>
+        {
+            if (this.debugLine)
+            {
                 this.scene.remove(this.debugLine)
                 this.debugLine = null
             }

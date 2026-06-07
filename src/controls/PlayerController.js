@@ -20,59 +20,57 @@ export class PlayerController {
         this.setupMouseLook()
     }
 
-    setupPointerLock() {
-        document.addEventListener('click', () => {
+    setupPointerLock()
+    {
+        document.addEventListener('click', () =>
+        {
             document.body.requestPointerLock()
         })
     }
 
-    setupMouseLook() {
-        document.addEventListener('mousemove', (event) => {
-            if (document.pointerLockElement === document.body) {
+    setupMouseLook()
+    {
+        document.addEventListener('mousemove', (event) =>
+        {
+            if (document.pointerLockElement === document.body)
+            {
                 this.cameraRotationY -= event.movementX * this.mouseSensitivity
             }
         })
     }
 
-    update() {
-        const speed = this.input.isKeyDown('ShiftLeft')
-            ? this.sprintSpeed
-            : this.moveSpeed
+    update()
+    {
+        const speed = this.input.isKeyDown('ShiftLeft') ? this.sprintSpeed : this.moveSpeed
 
-        const forward = new THREE.Vector3(
-            Math.sin(this.cameraRotationY),
-            0,
-            Math.cos(this.cameraRotationY)
-        )
-
-        const right = new THREE.Vector3(
-            -forward.z,
-            0,
-            forward.x
-        )
+        const forward = new THREE.Vector3(Math.sin(this.cameraRotationY), 0, Math.cos(this.cameraRotationY))
+        const right = new THREE.Vector3(-forward.z, 0, forward.x)
 
         const moveDirection = new THREE.Vector3()
 
-        if (this.input.isKeyDown('KeyW')) {
+        if (this.input.isKeyDown('KeyW'))
+        {
             moveDirection.add(forward)
         }
 
-        if (this.input.isKeyDown('KeyS')) {
+        if (this.input.isKeyDown('KeyS'))
+        {
             moveDirection.sub(forward)
         }
 
-        if (this.input.isKeyDown('KeyA')) {
+        if (this.input.isKeyDown('KeyA'))
+        {
             moveDirection.sub(right)
         }
 
-        if (this.input.isKeyDown('KeyD')) {
+        if (this.input.isKeyDown('KeyD'))
+        {
             moveDirection.add(right)
         }
 
-        // Always align player group rotation with camera look direction
-        // this.player.rotation.y = this.cameraRotationY
 
-        if (moveDirection.length() > 0) {
+        if (moveDirection.length() > 0)
+        {
             moveDirection.normalize()
 
             const movement = moveDirection.clone().multiplyScalar(speed)
@@ -82,7 +80,7 @@ export class PlayerController {
             {
                 this.player.position.copy(nextPosition)
 
-                // Roll the ball!
+                // roll the ball
                 if (this.player.ballMesh) {
                     const radius = 1.0
                     const distance = movement.length()
@@ -91,26 +89,20 @@ export class PlayerController {
                     const up = new THREE.Vector3(0, 1, 0)
                     const axis = new THREE.Vector3().crossVectors(up, moveDirection).normalize()
 
-                    if (axis.lengthSq() > 0) {
+                    if (axis.lengthSq() > 0)
+                    {
                         this.player.ballMesh.rotateOnWorldAxis(axis, angle)
                     }
                 }
             }
         }
 
-        // Third-person camera follow
-        if (this.cameraMode !== 'NAME_VIEW') {
+        // third person camera follow
+        if (this.cameraMode !== 'NAME_VIEW')
+        {
             const cameraOffset = new THREE.Vector3(0, 4.5, -8)
-
-            cameraOffset.applyAxisAngle(
-                new THREE.Vector3(0, 1, 0),
-                this.cameraRotationY
-            )
-
-            this.camera.position.copy(
-                this.player.position.clone().add(cameraOffset)
-            )
-
+            cameraOffset.applyAxisAngle(new THREE.Vector3(0, 1, 0), this.cameraRotationY)
+            this.camera.position.copy(this.player.position.clone().add(cameraOffset))
             this.camera.lookAt(this.player.position)
         }
     }

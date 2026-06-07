@@ -22,7 +22,7 @@ import {createScoreUI} from './ui/scoreUI.js'
 import {createSettingsUI} from './ui/settingsUI.js'
 
 import {createEnemy} from './entities/enemy.js'
-import {EnemyFSM, EnemyState} from './ai/EnemyFSM'
+import {EnemyFSM} from './ai/EnemyFSM'
 
 import {TagSystem} from './gameplay/TagSystem.js'
 
@@ -79,7 +79,7 @@ scene.add(ground);
 const colliders = createArena(scene)
 setupStudentName(scene)
 
-// assetLoader.load('/public/Bee.gltf', scene, {x: 0, y: 0, z: 0}, 1, 0,'Bee');
+// assetLoader.load('/chest.glb', scene, {x: 0, y: 0, z: 0}, 1, 0,'Chest');
 assetLoader.loadModel('/chest.glb')
     .then((chest) => {
 
@@ -126,22 +126,22 @@ assetLoader.loadModel('/shell.glb')
         shell.name = 'Shell';
     })
 
-// Camera Transition States and Variables
+// camera transition states and variables
 let cameraMode = 'FOLLOW'; // 'FOLLOW', 'TRANSITION_TO_NAME', 'SHOW_NAME', 'TRANSITION_TO_FOLLOW'
 let transitionProgress = 0;
-const transitionDuration = 1.5; // seconds
-const nameViewPos = new THREE.Vector3(140, 25, 0); // Top-down view position
-const nameViewTarget = new THREE.Vector3(140, 0.2, 0); // Center of the name
+const transitionDuration = 1.5;
+const nameViewPos = new THREE.Vector3(140, 25, 0); // top down view position
+const nameViewTarget = new THREE.Vector3(140, 0.2, 0); // center of the name
 
 const startPosition = new THREE.Vector3();
 const startQuaternion = new THREE.Quaternion();
 const targetPosition = new THREE.Vector3();
 const targetQuaternion = new THREE.Quaternion();
 
-// A dummy camera to calculate target quaternions
+// a dummy camera to calculate target quaternions
 const tempCamera = new THREE.PerspectiveCamera();
 
-// Keyboard shortcut listener for camera transition
+// keyboard shortcut listener for camera transition
 window.addEventListener('keydown', (event) => {
     if (event.code === 'KeyN') {
         if (cameraMode === 'FOLLOW') {
@@ -154,7 +154,7 @@ window.addEventListener('keydown', (event) => {
 
             targetPosition.copy(nameViewPos);
 
-            // Calculate target quaternion
+            // calculate target quaternion
             tempCamera.position.copy(nameViewPos);
             tempCamera.up.set(0, 0, -1);
             tempCamera.lookAt(nameViewTarget);
@@ -245,7 +245,7 @@ Promise.all([
     console.error('Error loading shaders:', err);
 });
 
-// Listener for switching shaders
+// listener for switching shaders
 window.addEventListener('keydown', (event) => {
     if (event.code === 'KeyK') {
         currentShaderMode = (currentShaderMode + 1) % 3;
@@ -260,18 +260,13 @@ scene.add(ocean.mesh)
 const collisionSystem = new CollisionSystem(colliders)
 
 const flag = createFlag()
-flag.name = 'Flag'
-
 flag.position.set(0, 0, 0)
-
 scene.add(flag)
 
 const player = createPlayer()
-player.name = 'Player'
 scene.add(player)
 
 const enemy = createEnemy()
-enemy.name = 'Enemy'
 scene.add(enemy)
 
 const flagSystem = new FlagSystem(
@@ -307,7 +302,7 @@ const playerController = new PlayerController(
 )
 window.playerController = playerController;
 
-// Game Loop
+// game loop
 function animate() {
     requestAnimationFrame(animate);
 
@@ -362,7 +357,7 @@ function animate() {
     flag.userData.flagMaterial.uniforms.time.value =
         performance.now() * 0.001;
 
-    // ocean animation ONLY
+    // ocean animation only
     ocean.material.uniforms.time.value =
         performance.now() * 0.001
 
@@ -394,7 +389,7 @@ function animate() {
 
 animate()
 
-// Resize Handling
+// resize handling
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

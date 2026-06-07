@@ -64,20 +64,16 @@ export function setupStudentName(scene) {
         ]
     };
 
-    // Position letters for each word on a separate row, centered
     const words = ["ELİF", "NAZLI", "BÖKE"];
     const letterWidth = 3;
     const letterSpacing = 2.5;
-    const rowSpacing = 12; // Vertical spacing between rows along Z-axis
+    const rowSpacing = 12;
     const yCoord = -4.8;
 
     words.forEach((wordStr, rowIndex) => {
         const word = wordStr.split('');
-        // Total width of all letters and gaps for this word:
         const totalWidth = word.length * letterWidth + (word.length - 1) * letterSpacing;
-        // Centering it around x = 70:
         const startX = 140 - totalWidth / 2;
-        // Center the middle row (rowIndex 1) at z = 0, row 0 at z = -10, row 2 at z = 10
         const zBase = (rowIndex - 1) * rowSpacing;
 
         let currentX = startX;
@@ -88,8 +84,7 @@ export function setupStudentName(scene) {
                 points.forEach((pt) => {
                     const worldX = currentX + pt.x;
                     const worldZ = zBase + pt.z;
-                    // Load the rock asset at this position with scale 0.5 to look like small modules forming the letter
-                    assetLoader.load('/public/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
+                    assetLoader.load('/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
                 });
             }
             currentX += letterWidth + letterSpacing;

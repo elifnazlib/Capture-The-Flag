@@ -56,7 +56,7 @@ export function createHelpUI() {
 
         const keyEl = document.createElement('span');
         keyEl.textContent = key;
-        keyEl.style.color = '#39ff14'; // Green highlight for keys
+        keyEl.style.color = '#bd9a73';
 
         const descEl = document.createElement('span');
         descEl.textContent = desc;
@@ -72,22 +72,29 @@ export function createHelpUI() {
     addCategory('Movement');
     addShortcut('W / A / S / D', 'Move Character');
     addShortcut('Shift (Left)', 'Sprint / Speed');
-    addShortcut('Mouse Click', 'Lock mouse / Look');
+    addShortcut('Left Mouse Click', 'Lock mouse / Tag');
+    addShortcut('Mouse ', 'Look around');
     addShortcut('ESC', 'Unlock mouse pointer');
 
     // --- CINEMATIC CAMERA ---
     addCategory('Camera Actions');
-    addShortcut('N', 'Toggle Name View (ELİF)');
+    addShortcut('N', 'Toggle Name View');
 
     // --- RENDERING MODES ---
-    addCategory('Shading & Dev');
-    addShortcut('K', 'Toggle post shaders');
-    addShortcut('P', 'Toggle Dev settings');
+    addCategory('Shading & Settings');
+    addShortcut('K', 'Toggle shaders');
+    addShortcut('P', 'Toggle settings');
 
     // --- INTERACTION ---
-    addCategory('Dev Transform');
-    addShortcut('P Panel Dropdown', 'Select Cube 1, 2, or 3');
-    addShortcut('P Panel +/-', 'Translate & rotate cube');
+    addCategory('Settings Panel');
+    addShortcut('Active Camera Dropdown', 'Original / Freeform');
+    addShortcut('Freeform Camera +/-', 'Translate / Rotate');
+    addShortcut('Toggle Spotlight', 'ON / OFF');
+    addShortcut('Spotlight +/-', 'Translate / Rotate');
+    addShortcut('Toggle Directional Light', 'ON / OFF');
+    addShortcut('Directional Light +/-', 'Rotate');
+    addShortcut('Object Select Dropdown', 'Chest / Castle / Shell');
+    addShortcut('Object +/-', 'Translate / Rotate');
 
     document.body.appendChild(panel);
 

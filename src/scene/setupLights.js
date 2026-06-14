@@ -54,7 +54,7 @@ export function setupLights(scene) {
 
     // keep helper and spotlight on initially
     spotlight.visible = true
-    spotlightHelper.visible = true
+    spotlightHelper.visible = false
 
     return { ambientLight, sun, spotlight, spotlightHelper }
 }

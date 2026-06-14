@@ -135,7 +135,7 @@ export function createSettingsUI(lights, cameraState) {
 
     // Pos
     const freeformPosLabel = document.createElement('div')
-    freeformPosLabel.textContent = '  Translation (Pos):'
+    freeformPosLabel.textContent = '  Translation:'
     freeformPosLabel.style.color = '#888'
     freeformFieldsContainer.appendChild(freeformPosLabel)
     createControlRow(freeformFieldsContainer, '    X:', () => free.position.x, (val) => free.position.x = val, 1.0)
@@ -144,7 +144,7 @@ export function createSettingsUI(lights, cameraState) {
 
     // Rot (in radians, let's use 0.1 step)
     const freeformRotLabel = document.createElement('div')
-    freeformRotLabel.textContent = '  Rotation (Angle):'
+    freeformRotLabel.textContent = '  Rotation:'
     freeformRotLabel.style.color = '#888'
     freeformFieldsContainer.appendChild(freeformRotLabel)
     createControlRow(freeformFieldsContainer, '    X:', () => free.rotation.x, (val) => free.rotation.x = val, 0.1)
@@ -178,12 +178,34 @@ export function createSettingsUI(lights, cameraState) {
     rowSpotOnOff.appendChild(btnSpotOnOff)
     panel.appendChild(rowSpotOnOff)
 
+    // --- Spotlight Helper Toggle ---
+    const rowSpotHelper = document.createElement('div')
+    rowSpotHelper.style.display = 'flex'
+    rowSpotHelper.style.justifyContent = 'space-between'
+    rowSpotHelper.style.marginTop = '5px'
+
+    const labelSpotHelper = document.createElement('span')
+    labelSpotHelper.textContent = 'Helper:'
+
+    const btnSpotHelper = document.createElement('button')
+    btnSpotHelper.textContent = spotlightHelper.visible ? 'ON' : 'OFF'
+
+    btnSpotHelper.onclick = () => {
+        spotlightHelper.visible = !spotlightHelper.visible
+        btnSpotHelper.textContent = spotlightHelper.visible ? 'ON' : 'OFF'
+    }
+
+    rowSpotHelper.appendChild(labelSpotHelper)
+    rowSpotHelper.appendChild(btnSpotHelper)
+
+    panel.appendChild(rowSpotHelper)
+
     // Intensity
     createControlRow(panel, 'Intensity:', () => spotlight.intensity, (val) => spotlight.intensity = Math.max(0, val), 2.0)
 
     // Translation
     const spotTransTitle = document.createElement('div')
-    spotTransTitle.textContent = 'Translation (Pos):'
+    spotTransTitle.textContent = 'Translation:'
     spotTransTitle.style.color = '#aaa'
     spotTransTitle.style.paddingLeft = '5px'
     panel.appendChild(spotTransTitle)
@@ -209,7 +231,7 @@ export function createSettingsUI(lights, cameraState) {
 
     // Rotation
     const spotRotTitle = document.createElement('div')
-    spotRotTitle.textContent = 'Rotation (Target):'
+    spotRotTitle.textContent = 'Rotation:'
     spotRotTitle.style.color = '#aaa'
     spotRotTitle.style.paddingLeft = '5px'
     panel.appendChild(spotRotTitle)
@@ -219,7 +241,7 @@ export function createSettingsUI(lights, cameraState) {
 
     // --- SUN / DIRECTIONAL LIGHT SECTION ---
     const sunHeader = document.createElement('div')
-    sunHeader.textContent = '[Sun (Dir Light)]'
+    sunHeader.textContent = '[Directional Light]'
     sunHeader.style.borderBottom = '1px solid #555'
     sunHeader.style.marginTop = '10px'
     sunHeader.style.fontWeight = 'bold'
@@ -246,7 +268,7 @@ export function createSettingsUI(lights, cameraState) {
 
     // Rotation (Target Position) ONLY - Translation removed
     const sunRotTitle = document.createElement('div')
-    sunRotTitle.textContent = 'Rotation (Target):'
+    sunRotTitle.textContent = 'Rotation:'
     sunRotTitle.style.color = '#aaa'
     sunRotTitle.style.paddingLeft = '5px'
     panel.appendChild(sunRotTitle)
@@ -347,7 +369,7 @@ export function createSettingsUI(lights, cameraState) {
 
         // Add translation title
         const posTitle = document.createElement('div')
-        posTitle.textContent = '  Translation (Pos):'
+        posTitle.textContent = '  Translation:'
         posTitle.style.color = '#888'
         posTitle.style.marginTop = '5px'
         transformFieldsContainer.appendChild(posTitle)
@@ -383,7 +405,7 @@ export function createSettingsUI(lights, cameraState) {
 
         // Add rotation title
         const rotTitle = document.createElement('div')
-        rotTitle.textContent = '  Rotation (Angle):'
+        rotTitle.textContent = '  Rotation:'
         rotTitle.style.color = '#888'
         rotTitle.style.marginTop = '5px'
         transformFieldsContainer.appendChild(rotTitle)

@@ -1,0 +1,23 @@
+- Created the palm tree glb model with Blender following the tutorial "How to create low-poly Palm | Blender Beginner Tutorial".
+Link: https://youtu.be/F5syGZpI-0k
+
+- Created the beach ball glb model with Blender following the tutorial "Tutorial : How To Make ' Beach Ball ' 3D MODEL in Blender Under 2 Minutes .".
+Link: https://youtu.be/TanwaGgVGWg
+
+- Created the rock glb model with Blender following the tutorial "Blender 2.8 Tutorial - Low Poly Rocks Modelling | Fast and Easy !".
+Link: https://youtu.be/UM-O-69Zmx0
+
+- Used the sand texture with size 1024 from the link: https://everytexture.com/everytexture-com-stock-nature-sand-00029/
+
+- Used the skybox from the link: https://opengameart.org/content/sky-box-sunny-day
+
+- Used the wood crate texture from the link: https://www.flickr.com/photos/photoshoproadmap/8640003215/in/photostream/
+
+- Used the sand castle glb model from the link: https://sketchfab.com/3d-models/sand-castle-day-19-0379b3c84e7944dab7537a0799375ee4
+
+- Used the seashell glb model from the link: https://sketchfab.com/3d-models/seashell-fossil-bc4b85625dd045608b498c41f8b5c1a7
+
+- Used the treasure chest glb model from the link: https://sketchfab.com/3d-models/treasure-chest-3196c892f8e74aa093d0c77f006b4302
+
+- Used the ocean background sound "Ambience, Seaside Waves, Close, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org.
+Link: https://freesound.org/people/InspectorJ/sounds/400632/

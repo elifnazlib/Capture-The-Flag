@@ -133,7 +133,7 @@ export function createArena(scene) {
 
                 // palm tree
                 assetLoader.load(
-                    '/palmTree.glb',
+                    './palmTree.glb',
                     scene,
                     position,
                     scale,
@@ -144,7 +144,7 @@ export function createArena(scene) {
                 if (chance(0.15)) {
 
                     assetLoader.load(
-                        '/rock.glb',
+                        './rock.glb',
                         scene,
                         {
                             x: baseX + randomRange(-3, 3),

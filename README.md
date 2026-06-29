@@ -2,6 +2,8 @@
 
 3D WebGL2 capture the flag game developed with JavaScript, Three.js and Vite.
 
+You can play the game from [this itch.io link](https://elifnazlib.itch.io/one-flag-no-friends).
+
 <img width="512" height="256" alt="gameplay gif" src="https://github.com/elifnazlib/Capture-The-Flag/blob/main/ctf_gameplay.gif" />
 
 ## Features of the game
@@ -14,6 +16,7 @@ You are controlling a beach ball to capture the flag before your enemy takes it 
 - Sprint with `left shift` key.
 - Open help menu with `H` key.
 - Open settings menu with `P` key.
+- Change shaders with `K` key.
 
 ## How to run:
 

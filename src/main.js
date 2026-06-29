@@ -57,7 +57,7 @@ const oceanSound = new THREE.Audio(listener)
 
 const audioLoader = new THREE.AudioLoader()
 
-audioLoader.load('/oceanBG.wav', (buffer) => {
+audioLoader.load('./oceanBG.wav', (buffer) => {
 
     oceanSound.setBuffer(buffer)
 
@@ -80,7 +80,7 @@ const colliders = createArena(scene)
 setupStudentName(scene)
 
 // assetLoader.load('/chest.glb', scene, {x: 0, y: 0, z: 0}, 1, 0,'Chest');
-assetLoader.loadModel('/chest.glb')
+assetLoader.loadModel('./chest.glb')
     .then((chest) => {
 
         chest.position.set(-8, 0, -7)
@@ -96,7 +96,7 @@ assetLoader.loadModel('/chest.glb')
         chest.name = 'Chest';
     })
 
-assetLoader.loadModel('/castle.glb')
+assetLoader.loadModel('./castle.glb')
     .then((castle) => {
 
         castle.position.set(10, 0, -5)
@@ -111,7 +111,7 @@ assetLoader.loadModel('/castle.glb')
         castle.name = 'Castle';
     })
 
-assetLoader.loadModel('/shell.glb')
+assetLoader.loadModel('./shell.glb')
     .then((shell) => {
 
         shell.position.set(-5, 0, 6)
@@ -174,10 +174,10 @@ let lastTime = performance.now();
 let currentShaderMode = 0; // 0: Normal, 1: Blinn-Phong, 2: Toon
 const shaderModes = ['Normal', 'Blinn-Phong', 'Toon'];
 
-const phongVertexUrl = '/shaders/phongVertex.glsl';
-const phongFragmentUrl = '/shaders/phongFragment.glsl';
-const toonVertexUrl = '/shaders/toonVertex.glsl';
-const toonFragmentUrl = '/shaders/toonFragment.glsl';
+const phongVertexUrl = './shaders/phongVertex.glsl';
+const phongFragmentUrl = './shaders/phongFragment.glsl';
+const toonVertexUrl = './shaders/toonVertex.glsl';
+const toonFragmentUrl = './shaders/toonFragment.glsl';
 
 let postScene = null;
 let postCamera = null;

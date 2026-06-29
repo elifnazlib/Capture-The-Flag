@@ -84,7 +84,7 @@ export function setupStudentName(scene) {
                 points.forEach((pt) => {
                     const worldX = currentX + pt.x;
                     const worldZ = zBase + pt.z;
-                    assetLoader.load('/rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
+                    assetLoader.load('./rock.glb', scene, { x: worldX, y: yCoord, z: worldZ }, 0.5);
                 });
             }
             currentX += letterWidth + letterSpacing;

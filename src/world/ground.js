@@ -6,20 +6,20 @@ export function createGround() {
     const textureLoader = new THREE.TextureLoader();
 
     // load diffuse map for the base color of the sand
-    const diffuseMap = textureLoader.load('/sand1/sand-diffuse-1024.jpg');
+    const diffuseMap = textureLoader.load('./sand1/sand-diffuse-1024.jpg');
     diffuseMap.colorSpace = THREE.SRGBColorSpace;
     diffuseMap.wrapS = THREE.RepeatWrapping;
     diffuseMap.wrapT = THREE.RepeatWrapping;
     diffuseMap.repeat.set(8, 8);
 
     // load normal map for adding lighting detail without increasing geometry complexity
-    const normalMap = textureLoader.load('/sand1/sand-normal-1024.jpg');
+    const normalMap = textureLoader.load('./sand1/sand-normal-1024.jpg');
     normalMap.wrapS = THREE.RepeatWrapping;
     normalMap.wrapT = THREE.RepeatWrapping;
     normalMap.repeat.set(8, 8);
 
     // load bump map for additional small scale height variation
-    const bumpMap = textureLoader.load('/sand1/sand-bump-1024.jpg');
+    const bumpMap = textureLoader.load('./sand1/sand-bump-1024.jpg');
     bumpMap.wrapS = THREE.RepeatWrapping;
     bumpMap.wrapT = THREE.RepeatWrapping;
     bumpMap.repeat.set(8, 8);

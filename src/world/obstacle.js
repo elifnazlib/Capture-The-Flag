@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 const textureLoader = new THREE.TextureLoader()
 
-const crateTexture = textureLoader.load('/crate.jpg')
+const crateTexture = textureLoader.load('./crate.jpg')
 crateTexture.colorSpace = THREE.SRGBColorSpace;
 
 crateTexture.wrapS = THREE.RepeatWrapping

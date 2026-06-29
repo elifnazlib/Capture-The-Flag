@@ -20,7 +20,7 @@ export function createPlayer() {
     playerGroup.ballMesh = placeholder
 
     // load the beachBall_red.glb
-    assetLoader.loadModel('/beachBall_red.glb').then((model) => {
+    assetLoader.loadModel('./beachBall_red.glb').then((model) => {
         // remove placeholder
         playerGroup.remove(placeholder)
 

@@ -5,12 +5,12 @@ export function setupScene() {
 
     const loader = new THREE.CubeTextureLoader()
     const texture = loader.load([
-        '/skybox/right.bmp',
-        '/skybox/left.bmp',
-        '/skybox/top.bmp',
-        '/skybox/bottom.bmp',
-        '/skybox/front.bmp',
-        '/skybox/back.bmp'
+        './skybox/right.bmp',
+        './skybox/left.bmp',
+        './skybox/top.bmp',
+        './skybox/bottom.bmp',
+        './skybox/front.bmp',
+        './skybox/back.bmp'
     ])
     scene.background = texture
 

@@ -20,7 +20,7 @@ export function createEnemy() {
     enemyGroup.ballMesh = placeholder
 
     // load the beachBall_blue.glb
-    assetLoader.loadModel('/beachBall_blue.glb').then((model) => {
+    assetLoader.loadModel('./beachBall_blue.glb').then((model) => {
         // remove placeholder
         enemyGroup.remove(placeholder)
 
